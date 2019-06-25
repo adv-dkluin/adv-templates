@@ -1,36 +1,56 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "virtualMachineName": {
-            "type": "string",
-            "metadata": {
-                "description": "The name of the VM"
-            }
-        },
-        "adminUsername": {
-            "type": "string",
-            "metadata": {
-                "description": "The admin user name of the VM"
-            }
-        },
-        "adminPassword": {
-            "type": "securestring",
-            "metadata": {
-                "description": "The admin password of the VM"
-            }
-        },
-        "location": {
-            "type": "string",
-            "defaultValue": "westeurope",
-            "metadata": {
-                "description": "Location for all resources."
-            }
-        }
+  "parameters": {
+    "virtualMachineName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the VM"
+      }
     },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "The admin user name of the VM"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The admin password of the VM"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "westeurope",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "EnvironmentSize": {
+      "type": "string",
+      "defaultValue": "Medium",
+      "allowedValues": [
+        "Medium",
+        "Large"
+      ],
+      "metadata": {
+        "description": "Medium for webserver. Large for Printserver"
+      }
+    }
+  },
   "variables": {
     "diskType": "StandardSSD_LRS",
-    "virtualMachineSize": "Standard_DS1_V2",
+
+    "TS-Size": {
+      "Medium": {
+        "vmSize": "Standard_DS1_v2"
+      },
+      "Large": {
+        "vmSize": "Standard_D2s_v3"
+      }
+    },
+
     "windowsOSVersion": "2016-Datacenter",
     "dataDiskSize": 1024,
     "dataDisksCount": 5,
@@ -118,7 +138,7 @@
         ],
         "properties": {
           "hardwareProfile": {
-            "vmSize": "[variables('virtualMachineSize')]"
+            "vmSize": "[variables('TS-Size')[parameters('EnvironmentSize')].vmSize]"
           },
           "osProfile": {
             "computername": "[parameters('virtualMachineName')]",
