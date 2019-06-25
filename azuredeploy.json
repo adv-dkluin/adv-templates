@@ -43,7 +43,7 @@
     "subnetPrefix": "10.2.3.0/24",
     "publicIPAddressType": "Dynamic",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
-    "networkInterfaceName": "[toLower(parameters('virtualMachineName')),'-nic')]",
+    "networkInterfaceName": "[concat(toLower(parameters('virtualMachineName')),'-nic')]",
     "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]"
   },
     "resources": [
