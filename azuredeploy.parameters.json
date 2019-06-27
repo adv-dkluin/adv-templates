@@ -13,6 +13,12 @@
     },
     "location": {
       "value": "westeurope"
+    },
+    "vNet": {
+      "value": "existing"
+    },
+    "virtualNetworkName": {
+      "value": "vNet-"
     }
   }
 }

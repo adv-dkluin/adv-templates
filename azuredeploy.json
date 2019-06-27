@@ -27,6 +27,24 @@
         "description": "Location for all resources."
       }
     },
+    "vNet": {
+      "type": "string",
+      "defaultValue": "New",
+      "allowedValues": [
+        "New",
+        "Existing"
+      ],
+      "metadata": {
+        "description": "New or existing vNet for the VM"
+      }
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "defaultValue": "vNet-",
+      "metadata": {
+        "description": "Name of the existing VNET"
+      }
+    },
     "EnvironmentSize": {
       "type": "string",
       "defaultValue": "Medium",
@@ -54,7 +72,6 @@
     "windowsOSVersion": "2016-Datacenter",
     "dataDiskSize": 1024,
     "dataDisksCount": 2,
-    "virtualNetworkName": "[concat(toLower(parameters('virtualMachineName')),'-vnet')]",
     "subnetName": "[concat(toLower(parameters('virtualMachineName')),'-subnet')]",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
@@ -81,27 +98,28 @@
                 "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
             }
         },
-        {
-            "apiVersion": "2018-02-01",
-            "type": "Microsoft.Network/virtualNetworks",
-            "name": "[variables('virtualNetworkName')]",
-            "location": "[parameters('location')]",
-            "properties": {
-                "addressSpace": {
-                    "addressPrefixes": [
-                        "[variables('addressPrefix')]"
-                    ]
-                },
-                "subnets": [
-                    {
-                        "name": "[variables('subnetName')]",
-                        "properties": {
-                            "addressPrefix": "[variables('subnetPrefix')]"
-                        }
-                    }
-                ]
+      {
+        "condition": "[equals(parameters('vNet'), 'New')]",
+        "apiVersion": "2018-02-01",
+        "type": "Microsoft.Network/virtualNetworks",
+        "name": "[parameters('virtualNetworkName')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "addressSpace": {
+            "addressPrefixes": [
+              "[variables('addressPrefix')]"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "[variables('subnetName')]",
+              "properties": {
+                "addressPrefix": "[variables('subnetPrefix')]"
+              }
             }
-        },
+          ]
+        }
+      },
       {
         "apiVersion": "2018-02-01",
         "type": "Microsoft.Network/networkInterfaces",
