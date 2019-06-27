@@ -93,12 +93,7 @@
     "publicIPAddressType": "Dynamic",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetName'))]",
     "networkInterfaceName": "[concat(toLower(parameters('virtualMachineName')),'-nic')]",
-    "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]",
-    "vmExtensionName": "Webserver",
-    "modulesUrl": "https://github.com/Azure/azure-quickstart-templates/blob/master/dsc-extension-iis-server-windows-vm/ContosoWebsite.ps1.zip",
-    "ConfigurationFunction": "ContosoWebsite.ps1\\ContosoWebsite"
-
-
+    "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]"
   },
   "resources": [
     {
@@ -221,30 +216,7 @@
           ]
         }
       }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('virtualMachineName'),'/', variables('vmExtensionName'))]",
-      "apiVersion": "2015-05-01-preview",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "ModulesUrl": "[variables('modulesUrl')]",
-          "ConfigurationFunction": "[variables('configurationFunction')]",
-          "Properties": {
-            "MachineName": "[parameters('virtualMachineName')]"
-          }
-        },
-        "protectedSettings": null
-      }
     }
-
+    
   ]
 }
