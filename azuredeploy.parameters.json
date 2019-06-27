@@ -19,6 +19,9 @@
     },
     "virtualNetworkName": {
       "value": "vNet-"
+    },
+    "DataDisks": {
+      "value": "1"
     }
   }
 }
