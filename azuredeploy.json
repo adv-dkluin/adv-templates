@@ -53,7 +53,7 @@
 
     "windowsOSVersion": "2016-Datacenter",
     "dataDiskSize": 1024,
-    "dataDisksCount": 5,
+    "dataDisksCount": 2,
     "virtualNetworkName": "[concat(toLower(parameters('virtualMachineName')),'-vnet')]",
     "subnetName": "[concat(toLower(parameters('virtualMachineName')),'-subnet')]",
     "imagePublisher": "MicrosoftWindowsServer",
