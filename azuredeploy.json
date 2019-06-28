@@ -125,11 +125,10 @@
         }
       },
       {
-        "condition": "[equals(parameters('vNet'), 'New')]",
         "apiVersion": "2018-02-01",
-        "type": "Microsoft.Network/virtualNetworks",
-        "name": "[parameters('virtualNetworkName')]",
+        "condition": "[equals(parameters('vNet'), 'New')]",
         "location": "[parameters('location')]",
+        "name": "[parameters('virtualNetworkName')]",
         "properties": {
           "addressSpace": {
             "addressPrefixes": [
@@ -144,7 +143,8 @@
               }
             }
           ]
-        }
+        },
+        "type": "Microsoft.Network/virtualNetworks"
       },
       {
         "apiVersion": "2018-02-01",
@@ -245,10 +245,10 @@
           "typeHandlerVersion": "2.19",
           "autoUpgradeMinorVersion": true,
           "settings": {
-            "ModulesUrl": "[variables('modulesUrl')]",
-            "ConfigurationFunction": "[variables('configurationFunction')]",
+            "modulesUrl": "[variables('modulesUrl')]",
+            "configurationFunction": "[variables('configurationFunction')]",
             "Properties": {
-              "MachineName": "[parameters('virtualMachineName')]"
+              "machineName": "[parameters('virtualMachineName')]"
             }
           },
           "protectedSettings": null
