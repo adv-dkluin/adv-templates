@@ -68,18 +68,6 @@
       "metadata": {
         "description": "Medium for webserver. Large for Printserver"
       }
-    },
-    "Dsc-configuratie": {
-      "type": "string",
-      "defaultValue": "Webserver",
-      "allowedValues": [
-        "Webserver",
-        "Printserver"
-      ],
-      "metadata": {
-        "description": "DSC for VM"
-      }
-
     }
   },
   "variables": {
@@ -105,9 +93,7 @@
     "publicIPAddressType": "Dynamic",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetName'))]",
     "networkInterfaceName": "[concat(toLower(parameters('virtualMachineName')),'-nic')]",
-    "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]",
-    "modulesUrl": "https://github.com/Azure/azure-quickstart-templates/blob/master/dsc-extension-iis-server-windows-vm/ContosoWebsite.ps1.zip",
-    "configurationFunction": "ContosoWebsite.ps1\\ContosoWebsite"
+    "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]"
   },
     "resources": [
       {
@@ -230,29 +216,7 @@
             ]
           }
         }
-      },
-      {
-        "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat(parameters('virtualMachineName'),'/', parameters('Dsc-configuratie'))]",
-        "apiVersion": "2015-05-01-preview",
-        "location": "[parameters('location')]",
-        "dependsOn": [
-          "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
-        ],
-        "properties": {
-          "publisher": "Microsoft.Powershell",
-          "type": "DSC",
-          "typeHandlerVersion": "2.19",
-          "autoUpgradeMinorVersion": true,
-          "settings": {
-            "modulesUrl": "[variables('modulesUrl')]",
-            "configurationFunction": "[variables('configurationFunction')]",
-            "Properties": {
-              "machineName": "[parameters('virtualMachineName')]"
-            }
-          },
-          "protectedSettings": null
-        }
       }
+      
     ]
   }
