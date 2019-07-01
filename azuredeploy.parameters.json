@@ -22,9 +22,6 @@
     },
     "DataDisks": {
       "value": "1"
-    },
-    "Dsc-configuration": {
-      "value": "Webserver"
     }
   }
 }
