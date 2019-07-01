@@ -271,9 +271,6 @@
           "configurationFunction": "",
           "Properties": [
             {
-              "MachineName": "[parameters('virtualMachineName')]"
-            },
-            {
               "Name": "RegistrationKey",
               "Value": {
                 "UserName": "PLACEHOLDER_DONOTUSE",
