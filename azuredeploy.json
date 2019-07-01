@@ -89,7 +89,7 @@
     },
     "configurationName": {
       "type": "string",
-      "defaultValue": "webserver",
+      "defaultValue": "webServer",
       "metadata": {
         "description": "Name of the configuration"
       }
