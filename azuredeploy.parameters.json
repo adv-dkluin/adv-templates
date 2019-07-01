@@ -23,6 +23,9 @@
     "DataDisks": {
       "value": "1"
     },
+    "Automationaccount": {
+      "value": "existing"
+    },
     "automationAccountName": {
       "value": "AutomationAccount"
     },

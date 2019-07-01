@@ -69,6 +69,17 @@
         "description": "Medium for webserver. Large for Printserver"
       }
     },
+    "Automationaccount": {
+      "type": "string",
+      "defaultValue": "New",
+      "allowedValues": [
+        "New",
+        "Existing"
+      ],
+      "metadata": {
+        "description": "New or existing vNet for the VM"
+      }
+    },
     "automationAccountName": {
       "type": "string",
       "defaultValue": "AutomationAccount",
@@ -238,6 +249,7 @@
     {
       "comments": "Automation account for DSC",
       "apiVersion": "2015-10-31",
+      "condition": "[equals(parameters('Automationaccount'), 'New')]",
       "location": "[parameters('location')]",
       "name": "[parameters('automationAccountName')]",
       "type": "Microsoft.Automation/automationAccounts",
@@ -267,8 +279,8 @@
           }
         },
         "settings": {
-          "modulesUrl": "",
-          "configurationFunction": "",
+          "modulesUrl": "[variables('modulesUrl')]",
+          "configurationFunction": "[variables('configurationFunction')]",
           "Properties": [
             {
               "Name": "RegistrationKey",
