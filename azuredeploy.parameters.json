@@ -22,6 +22,12 @@
     },
     "DataDisks": {
       "value": "1"
+    },
+    "automationAccountName": {
+      "value": "AutomationAccount"
+    },
+    "configurationName": {
+      "value": "Webserver"
     }
   }
 }
