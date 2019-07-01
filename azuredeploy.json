@@ -250,7 +250,7 @@
     {
       "comments": "DSC extension configuration",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "Microsoft.Powershell.DSC",
+      "name": "[concat(toLower(parameters('virtualMachineName')),'-MicrosoftPowershell')]",
       "apiVersion": "2017-03-30",
       "location": "[resourceGroup().location]",
       "dependsOn": [
