@@ -20,6 +20,9 @@
         "description": "The admin password of the VM"
       }
     },
+
+
+
     "location": {
       "type": "string",
       "defaultValue": "westeurope",
@@ -96,8 +99,21 @@
     }
   },
   "variables": {
+    "modulesUrl": {
+      "type": "string",
+      "defaultValue": "https://github.com/Azure/azure-quickstart-templates/blob/master/dsc-extension-iis-server-windows-vm/ContosoWebsite.ps1.zip",
+      "metadata": {
+        "description": "URL for the DSC configuration module. NOTE: Can be a Github url(raw) to the zip file"
+      }
+    },
+    "configurationFunction": {
+      "type": "string",
+      "defaultValue": "ContosoWebsite.ps1\\ContosoWebsite",
+      "metadata": {
+        "description": "DSC configuration function to call"
+      }
+    },
     "diskType": "StandardSSD_LRS",
-
     "TS-Size": {
       "Medium": {
         "vmSize": "Standard_DS1_v2"
@@ -119,8 +135,7 @@
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetName'))]",
     "networkInterfaceName": "[concat(toLower(parameters('virtualMachineName')),'-nic')]",
     "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]",
-    "modulesUrl": "https://github.com/Azure/azure-quickstart-templates/blob/master/dsc-extension-iis-server-windows-vm/ContosoWebsite.ps1.zip",
-    "configurationFunction": "ContosoWebsite.ps1\\ContosoWebsite",
+
     "configurationModeFrequencyMins": "240",
     "refreshFrequencyMins": "720"
   },
@@ -279,8 +294,8 @@
           }
         },
         "settings": {
-          "modulesUrl": "[variables('modulesUrl')]",
-          "configurationFunction": "[variables('configurationFunction')]",
+          "ModulesUrl": "[variables('modulesUrl')]",
+          "ConfigurationFunction": "[variables('configurationFunction')]",
           "Properties": [
             {
               "Name": "MachineName",
