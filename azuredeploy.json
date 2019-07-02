@@ -293,8 +293,8 @@
           }
         },
         "settings": {
-          "ModulesUrl": "[parameters('modulesUrl')]",
-          "ConfigurationFunction": "[parameters('configurationFunction')]",
+          "modulesUrl": "[parameters('modulesUrl')]",
+          "configurationFunction": "[parameters('configurationFunction')]",
           "Properties": [
             {
               "Name": "MachineName",
