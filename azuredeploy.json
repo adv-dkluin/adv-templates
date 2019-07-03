@@ -28,15 +28,6 @@
         "description": "URL for the DSC configuration module. NOTE: Can be a Github url(raw) to the zip file"
       }
     },
-    "configurationFunction": {
-      "type": "string",
-      "defaultValue": "ContosoWebsite.ps1\\ContosoWebsite",
-      "metadata": {
-        "description": "DSC configuration function to call"
-      }
-    },
-
-
     "location": {
       "type": "string",
       "defaultValue": "westeurope",
@@ -295,7 +286,7 @@
         },
         "settings": {
           "modulesUrl": "[parameters('modulesUrl')]",
-          "configurationFunction": "[parameters('configurationFunction')]",
+          "configurationFunction": "WebServer.ps1\\WebServer",
           "Properties": [
             {
               "Name": "RegistrationKey",
