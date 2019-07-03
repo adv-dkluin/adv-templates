@@ -88,9 +88,15 @@
         "description": "Name of the AutomationAccount"
       }
     },
+    "modulesUrl": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the URL for downloading the PowerShell DSC module. In this case it should be the link to a zip file hosted under an Azure storage container"
+      }
+    },
     "configurationName": {
       "type": "string",
-      "defaultValue": "webServer",
+      "defaultValue": "webServer.localhost",
       "metadata": {
         "description": "Name of the configuration"
       }
@@ -279,8 +285,8 @@
         },
         "settings": {
           "WMFVersion": "latest",
-          "modulesUrl": "C:\\Users\\User\\Source\\Repos\\adv-templates\\WebServer.ps1.zip",
-          "configurationFunction": "WebServer.ps1\\WebServer",
+          "modulesUrl": "[parameters('modulesUrl')]",
+          "configurationFunction": "WindowsIISServerConfig.ps1\\WindowsIISServerConfig",
           "Properties": [
             {
               "Name": "RegistrationKey",
