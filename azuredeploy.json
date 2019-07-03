@@ -113,7 +113,7 @@
     }
   },
   "variables": {
-    
+
     "diskType": "StandardSSD_LRS",
     "TS-Size": {
       "Medium": {
@@ -297,11 +297,6 @@
           "modulesUrl": "[parameters('modulesUrl')]",
           "configurationFunction": "[parameters('configurationFunction')]",
           "Properties": [
-            {
-              "Name": "MachineName",
-              "Value": "[parameters('virtualMachineName')]",
-              "TypeName": "System.String"
-            },
             {
               "Name": "RegistrationKey",
               "Value": {
