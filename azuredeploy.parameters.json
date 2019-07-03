@@ -27,7 +27,7 @@
       "value": "AutomationAccount"
     },
     "configurationName": {
-      "value": "webserver"
+      "value": "Webserver"
     },
     "modulesUrl": {
       "value": "https://github.com/Azure/azure-quickstart-templates/raw/master/dsc-extension-iis-server-windows-vm/ContosoWebsite.ps1.zip"

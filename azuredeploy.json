@@ -285,6 +285,7 @@
           }
         },
         "settings": {
+          "WMFVersion":  "latest",
           "modulesUrl": "[parameters('modulesUrl')]",
           "configurationFunction": "WebServer.ps1\\WebServer",
           "Properties": [
