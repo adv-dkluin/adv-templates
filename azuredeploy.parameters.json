@@ -28,9 +28,6 @@
     },
     "configurationName": {
       "value": "Webserver"
-    },
-    "modulesUrl": {
-      "value": "https://github.com/adv-dkluin/adv-templates/blob/master/WebServer.ps1.zip"
     }
   }
 }

@@ -21,13 +21,6 @@
         "description": "The admin password of the VM"
       }
     },
-
-    "modulesUrl": {
-      "type": "string",
-      "metadata": {
-        "description": "URL for the DSC configuration module. NOTE: Can be a Github url(raw) to the zip file"
-      }
-    },
     "location": {
       "type": "string",
       "defaultValue": "westeurope",
@@ -285,8 +278,8 @@
           }
         },
         "settings": {
-          "WMFVersion":  "latest",
-          "modulesUrl": "[parameters('modulesUrl')]",
+          "WMFVersion": "latest",
+          "modulesUrl": "C:\\Users\\User\\Source\\Repos\\adv-templates\\WebServer.ps1.zip",
           "configurationFunction": "WebServer.ps1\\WebServer",
           "Properties": [
             {
