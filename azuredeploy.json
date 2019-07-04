@@ -276,7 +276,7 @@
       "properties": {
         "publisher": "Microsoft.Powershell",
         "type": "DSC",
-        "typeHandlerVersion": "2.75",
+        "typeHandlerVersion": "2.19",
         "autoUpgradeMinorVersion": true,
         "protectedSettings": {
           "Items": {
@@ -286,50 +286,10 @@
         "settings": {
           "WMFVersion": "latest",
           "modulesUrl": "[parameters('modulesUrl')]",
-          "configurationFunction": "WindowsIISServerConfig.ps1\\WindowsIISServerConfig",
+          "configurationFunction": "ContosoWebsite.ps1\\ContosoWebsite",
           "Properties": [
             {
-              "Name": "RegistrationKey",
-              "Value": {
-                "UserName": "PLACEHOLDER_DONOTUSE",
-                "Password": "PrivateSettingsRef:registrationKeyPrivate"
-              },
-              "TypeName": "System.Management.Automation.PSCredential"
-            },
-            {
-              "Name": "RegistrationUrl",
-              "Value": "[reference(concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))).registrationUrl]",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "NodeConfigurationName",
-              "Value": "[concat(parameters('configurationName'),'.',tolower(parameters('virtualMachineName')))]",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "ConfigurationMode",
-              "Value": "ApplyandAutoCorrect",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "RebootNodeIfNeeded",
-              "Value": true,
-              "TypeName": "System.Boolean"
-            },
-            {
-              "Name": "ActionAfterReboot",
-              "Value": "ContinueConfiguration",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "ConfigurationModeFrequencyMins",
-              "Value": "[variables('configurationModeFrequencyMins')]",
-              "TypeName": "System.Int32"
-            },
-            {
-              "Name": "RefreshFrequencyMins",
-              "Value": "[variables('refreshFrequencyMins')]",
-              "TypeName": "System.Int32"
+              "MachineName": "[parameters('virtualMachineName')]"
             }
           ]
         }
@@ -337,3 +297,5 @@
     }
   ]
 }
+
+
