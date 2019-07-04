@@ -13,7 +13,8 @@
       "defaultValue": "None",
       "allowedValues": [
         "None",
-        "Webserver"
+        "Webserver",
+        "Printserver"
       ],
       "metadata": {
         "description": "Name of the configuration"
@@ -329,7 +330,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "configuration": {
-            "url": "https://github.com/Azure/azure-quickstart-templates/raw/master/dsc-extension-iis-server-windows-vm/ContosoWebsite.ps1.zip",
+            "url": "https://github.com/adv-dkluin/adv-templates/blob/master/PrinterServer.ps1.zip",
             "script": "PrinterServer.ps1",
             "function": "PrinterServer"
           },
