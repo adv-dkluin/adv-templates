@@ -100,7 +100,7 @@
 
     "diskType": "StandardSSD_LRS",
     "TS-Size": {
-      "A1_v2    | 1 Core | 2GB RAM": {
+      "A1_v2\t    | 1 Core | 2GB RAM": {
         "vmSize": "Standard_A1_v2"
       },
       "DS1_v2   | 1 Core | 4GB RAM": {
