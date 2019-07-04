@@ -5,6 +5,9 @@
     "virtualMachineName": {
       "value": "VM"
     },
+    "configurationName": {
+      "value": "None"
+    },
     "adminUsername": {
       "value": "GEN-USER"
     },
@@ -25,9 +28,6 @@
     },
     "automationAccountName": {
       "value": "AutomationAccount"
-    },
-    "configurationName": {
-      "value": "None"
     }
   }
 }

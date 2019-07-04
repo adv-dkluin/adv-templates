@@ -8,6 +8,17 @@
         "description": "The name of the VM"
       }
     },
+    "configuration": {
+      "type": "string",
+      "defaultValue": "None",
+      "allowedValues": [
+        "None",
+        "Webserver"
+      ],
+      "metadata": {
+        "description": "Name of the configuration"
+      }
+    },
     "adminUsername": {
       "type": "string",
       "defaultValue": "advisor",
@@ -39,31 +50,31 @@
         "description": "Name of the existing VNET"
       }
     },
+    "EnvironmentSize": {
+      "type": "string",
+      "defaultValue": "DS1_v2   | 1 Core | 4GB RAM",
+      "allowedValues": [
+        "A1_v2    | 1 Core | 2GB RAM",
+        "DS1_v2   | 1 Core | 4GB RAM",
+        "A2_v2    | 2 Core | 4GB RAM",
+        "DS2_v3   | 2 Core | 8GB RAM",
+        "A4_v2    | 4 Core | 8GB RAM",
+        "DS4_v3   | 4 Core | 16GB RAM",
+        "A8_v2    | 8 Core | 16GB RAM",
+        "B2s      | 2 Core | 4GB RAM",
+        "B2ms     | 2 Core | 8GB RAM",
+        "B4ms     | 4 Core | 16GB RAM",
+        "B8ms     | 4 Core | 32GB RAM"
+      ],
+      "metadata": {
+        "description": "Medium for webserver. Large for Printserver"
+      }
+    },
     "DataDisks": {
       "type": "int",
       "defaultValue": "1",
       "metadata": {
         "description": "Amount of Datadisks"
-      }
-    },
-    "EnvironmentSize": {
-      "type": "string",
-      "defaultValue": "DS1_v2| 1 Core | 4GB RAM",
-      "allowedValues": [
-        "A1_v2 | 1 Core | 2GB RAM",
-        "DS1_v2| 1 Core | 4GB RAM",
-        "A2_v2 | 2 Core | 4GB RAM",
-        "DS2_v3| 2 Core | 8GB RAM",
-        "A4_v2 | 4 Core | 8GB RAM",
-        "DS4_v3| 4 Core | 16GB RAM",
-        "A8_v2 | 8 Core | 16GB RAM",
-        "B2s   | 2 Core | 4GB RAM",
-        "B2ms  | 2 Core | 8GB RAM",
-        "B4ms  | 4 Core | 16GB RAM",
-        "B8ms  | 4 Core | 32GB RAM"
-      ],
-      "metadata": {
-        "description": "Medium for webserver. Large for Printserver"
       }
     },
     "Automationaccount": {
@@ -83,54 +94,43 @@
       "metadata": {
         "description": "Name of the AutomationAccount"
       }
-    },
-    "configurationName": {
-      "type": "string",
-      "defaultValue": "None",
-      "allowedValues": [
-        "None",
-        "Webserver"
-      ],
-      "metadata": {
-        "description": "Name of the configuration"
-      }
     }
   },
   "variables": {
 
     "diskType": "StandardSSD_LRS",
     "TS-Size": {
-      "A1_v2 | 1 Core | 2GB RAM": {
+      "A1_v2    | 1 Core | 2GB RAM": {
         "vmSize": "Standard_A1_v2"
       },
-      "DS1_v2| 1 Core | 4GB RAM": {
+      "DS1_v2   | 1 Core | 4GB RAM": {
         "vmSize": "Standard_DS1_v2"
       },
-      "A2_v2 | 2 Core | 4GB RAM": {
+      "A2_v2    | 2 Core | 4GB RAM": {
         "vmSize": "Standard_A2_v2"
       },
-      "DS2_v3| 2 Core | 8GB RAM": {
+      "DS2_v3   | 2 Core | 8GB RAM": {
         "vmSize": "Standard_D2s_v3"
       },
-      "A4_v2 | 4 Core | 8GB RAM": {
+      "A4_v2    | 4 Core | 8GB RAM": {
         "vmSize": "Standard_A4_v2"
       },
-      "DS4_v3| 4 Core | 16GB RAM": {
+      "DS4_v3   | 4 Core | 16GB RAM": {
         "vmSize": "Standard_D4s_v3"
       },
-      "A8_v2 | 8 Core | 16GB RAM": {
+      "A8_v2    | 8 Core | 16GB RAM": {
         "vmSize": "Standard_A8_v2"
       },
-      "B2s   | 2 Core | 4GB RAM": {
+      "B2s      | 2 Core | 4GB RAM": {
         "vmSize": "Standard_B2s"
       },
-      "B2ms  | 2 Core | 8GB RAM": {
+      "B2ms     | 2 Core | 8GB RAM": {
         "vmSize": "Standard_B2ms"
       },
-      "B4ms  | 4 Core | 16GB RAM": {
+      "B4ms     | 4 Core | 16GB RAM": {
         "vmSize": "Standard_B4ms"
       },
-      "B8ms  | 4 Core | 32GB RAM": {
+      "B8ms     | 4 Core | 32GB RAM": {
         "vmSize": "Standard_B8ms"
       }
     },
@@ -285,7 +285,7 @@
       }
     },
     {
-      "condition": "[equals(parameters('configurationName'), 'Webserver')]",
+      "condition": "[equals(parameters('configuration'), 'Webserver')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('virtualMachineName'),'/Microsoft.Powershell.DSC')]",
       "apiVersion": "2015-05-01-preview",
