@@ -61,10 +61,9 @@
     },
     "EnvironmentSize": {
       "type": "string",
-      "defaultValue": "Medium",
       "allowedValues": [
-        "Medium",
-        "Large"
+        "A1v2 |1 Core|2GB RAM|64GB SAN",
+        "A2v2 |1 Core|4GB RAM|64GB SAN"
       ],
       "metadata": {
         "description": "Medium for webserver. Large for Printserver"
@@ -96,7 +95,11 @@
     },
     "configurationName": {
       "type": "string",
-      "defaultValue": "webServer.localhost",
+      "defaultValue": "None",
+      "allowedValues": [
+        "None",
+        "Webserver"
+      ],
       "metadata": {
         "description": "Name of the configuration"
       }
