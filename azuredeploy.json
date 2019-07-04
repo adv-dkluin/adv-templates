@@ -21,19 +21,6 @@
         "description": "The admin password of the VM"
       }
     },
-    "location": {
-      "type": "string",
-      "defaultValue": "westeurope",
-      "allowedValues": [
-        "westeurope",
-        "northeurope",
-        "westus",
-        "eastasia"
-      ],
-      "metadata": {
-        "description": "Location for all resources."
-      }
-    },
     "vNet": {
       "type": "string",
       "defaultValue": "New",
@@ -61,9 +48,19 @@
     },
     "EnvironmentSize": {
       "type": "string",
+      "defaultValue": "DS1_v2| 1 Core | 4GB RAM",
       "allowedValues": [
-        "A1v2 |1 Core|2GB RAM|64GB SAN",
-        "A2v2 |1 Core|4GB RAM|64GB SAN"
+        "A1_v2 | 1 Core | 2GB RAM",
+        "DS1_v2| 1 Core | 4GB RAM",
+        "A2_v2 | 2 Core | 4GB RAM",
+        "DS2_v3| 2 Core | 8GB RAM",
+        "A4_v2 | 4 Core | 8GB RAM",
+        "DS4_v3| 4 Core | 16GB RAM",
+        "A8_v2 | 8 Core | 16GB RAM",
+        "B2s   | 2 Core | 4GB RAM",
+        "B2ms  | 2 Core | 8GB RAM",
+        "B4ms  | 4 Core | 16GB RAM",
+        "B8ms  | 4 Core | 32GB RAM"
       ],
       "metadata": {
         "description": "Medium for webserver. Large for Printserver"
@@ -87,12 +84,6 @@
         "description": "Name of the AutomationAccount"
       }
     },
-    "modulesUrl": {
-      "type": "string",
-      "metadata": {
-        "description": "This is the URL for downloading the PowerShell DSC module. In this case it should be the link to a zip file hosted under an Azure storage container"
-      }
-    },
     "configurationName": {
       "type": "string",
       "defaultValue": "None",
@@ -109,14 +100,40 @@
 
     "diskType": "StandardSSD_LRS",
     "TS-Size": {
-      "Medium": {
+      "A1_v2 | 1 Core | 2GB RAM": {
+        "vmSize": "Standard_A1_v2"
+      },
+      "DS1_v2| 1 Core | 4GB RAM": {
         "vmSize": "Standard_DS1_v2"
       },
-      "Large": {
+      "A2_v2 | 2 Core | 4GB RAM": {
+        "vmSize": "Standard_A2_v2"
+      },
+      "DS2_v3| 2 Core | 8GB RAM": {
         "vmSize": "Standard_D2s_v3"
+      },
+      "A4_v2 | 4 Core | 8GB RAM": {
+        "vmSize": "Standard_A4_v2"
+      },
+      "DS4_v3| 4 Core | 16GB RAM": {
+        "vmSize": "Standard_D4s_v3"
+      },
+      "A8_v2 | 8 Core | 16GB RAM": {
+        "vmSize": "Standard_A8_v2"
+      },
+      "B2s   | 2 Core | 4GB RAM": {
+        "vmSize": "Standard_B2s"
+      },
+      "B2ms  | 2 Core | 8GB RAM": {
+        "vmSize": "Standard_B2ms"
+      },
+      "B4ms  | 4 Core | 16GB RAM": {
+        "vmSize": "Standard_B4ms"
+      },
+      "B8ms  | 4 Core | 32GB RAM": {
+        "vmSize": "Standard_B8ms"
       }
     },
-
     "windowsOSVersion": "2016-Datacenter",
     "dataDiskSize": 1024,
     "subnetName": "[concat(toLower(parameters('virtualMachineName')),'-subnet')]",
@@ -141,7 +158,7 @@
         "tier": "Regional"
       },
       "name": "[variables('publicIpAddressName')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "properties": {
         "publicIPAddressVersion": "IPv4",
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
@@ -150,7 +167,7 @@
     {
       "apiVersion": "2018-02-01",
       "condition": "[equals(parameters('vNet'), 'New')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "name": "[parameters('virtualNetworkName')]",
       "properties": {
         "addressSpace": {
@@ -173,7 +190,7 @@
       "apiVersion": "2018-02-01",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('networkInterfaceName')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIpAddressName'))]",
         "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
@@ -199,7 +216,7 @@
       "apiVersion": "2018-06-01",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('virtualMachineName')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
       ],
@@ -258,7 +275,7 @@
       "comments": "Automation account for DSC",
       "apiVersion": "2015-10-31",
       "condition": "[equals(parameters('Automationaccount'), 'New')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "name": "[parameters('automationAccountName')]",
       "type": "Microsoft.Automation/automationAccounts",
       "properties": {
@@ -268,6 +285,7 @@
       }
     },
     {
+      "condition": "[equals(parameters('configurationName'), 'Webserver')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('virtualMachineName'),'/Microsoft.Powershell.DSC')]",
       "apiVersion": "2015-05-01-preview",
@@ -282,7 +300,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "configuration": {
-            "url": "[parameters('modulesUrl')]",
+            "url": "https://github.com/Azure/azure-quickstart-templates/raw/master/dsc-extension-iis-server-windows-vm/ContosoWebsite.ps1.zip",
             "script": "ContosoWebsite.ps1",
             "function": "ContosoWebsite"
           },
