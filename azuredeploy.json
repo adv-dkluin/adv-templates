@@ -265,10 +265,9 @@
       }
     },
     {
-      "comments": "DSC extension configuration",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('virtualMachineName'),'/Microsoft.Powershell.DSC')]",
-      "apiVersion": "2017-03-30",
+      "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
@@ -278,63 +277,18 @@
         "type": "DSC",
         "typeHandlerVersion": "2.19",
         "autoUpgradeMinorVersion": true,
-        "protectedSettings": {
-          "Items": {
-            "registrationKeyPrivate": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2015-01-01-preview').Keys[0].value]"
+        "settings": {
+          "configuration": {
+            "url": "[parameters('modulesUrl')]",
+            "script": "ContosoWebsite.ps1",
+            "function": "ContosoWebsite"
+          },
+          "Properties": {
+            "$MachineName": "[parameters('virtualMachineName')]"
           }
         },
-        "settings": {
-          "WMFVersion": "latest",
-          "modulesUrl": "[parameters('modulesUrl')]",
-          "configurationFunction": "ContosoWebsite.ps1\\ContosoWebsite",
-          "Properties": [
-            {
-              "$MachineName:": "[parameters('virtualMachineName')]"
-            },
-            {
-              "Name": "RegistrationKey",
-              "Value": {
-                "UserName": "PLACEHOLDER_DONOTUSE",
-                "Password": "PrivateSettingsRef:registrationKeyPrivate"
-              },
-              "TypeName": "System.Management.Automation.PSCredential"
-            },
-            {
-              "Name": "RegistrationUrl",
-              "Value": "[reference(concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))).registrationUrl]",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "NodeConfigurationName",
-              "Value": "[concat(parameters('configurationName'),'.',tolower(parameters('virtualMachineName')))]",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "ConfigurationMode",
-              "Value": "ApplyandAutoCorrect",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "RebootNodeIfNeeded",
-              "Value": true,
-              "TypeName": "System.Boolean"
-            },
-            {
-              "Name": "ActionAfterReboot",
-              "Value": "ContinueConfiguration",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "ConfigurationModeFrequencyMins",
-              "Value": "[variables('configurationModeFrequencyMins')]",
-              "TypeName": "System.Int32"
-            },
-            {
-              "Name": "RefreshFrequencyMins",
-              "Value": "[variables('refreshFrequencyMins')]",
-              "TypeName": "System.Int32"
-            }
-          ]
+        "protectedSettings": {
+          "registrationKeyPrivate": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2015-01-01-preview').Keys[0].value]"
         }
       }
     }
