@@ -36,10 +36,7 @@
     "vNet": {
       "type": "string",
       "defaultValue": "New",
-      "allowedValues": [
-        "New",
-        "Existing"
-      ],
+      "allowedValues": "[variables('Vnets')]",
       "metadata": {
         "description": "New or existing vNet for the VM"
       }
@@ -92,20 +89,6 @@
     "automationAccountName": {
       "type": "string",
       "defaultValue": "AutomationAccount",
-      "metadata": {
-        "description": "Name of the AutomationAccount"
-      }
-    },
-    "providerNamespace": {
-      "type": "string",
-      "defaultValue": "Microsoft.Network",
-      "metadata": {
-        "description": "Name of the AutomationAccount"
-      }
-    },
-    "resourceType": {
-      "type": "string",
-      "defaultValue": "virtualNetworks",
       "metadata": {
         "description": "Name of the AutomationAccount"
       }
@@ -163,7 +146,18 @@
     "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]",
     "configurationModeFrequencyMins": "240",
     "refreshFrequencyMins": "720",
-    "vmExtensionName": "Microsoft.Powershell.DSC"
+    "vmExtensionName": "Microsoft.Powershell.DSC",
+    "Vnets": {
+        "apiVersion": "2018-02-01",
+        "type": "Microsoft.Network/virtualNetworks",
+        "name": "Microsoft.Network/virtualNetworks/read",
+        "display": {
+          "provider": "Microsoft Network",
+          "resource": "Virtual Network",
+          "operation": "Get Virtual Network",
+          "description": "Get the virtual network definition"
+        }
+      }
   },
   "resources": [
     {
@@ -180,6 +174,7 @@
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
       }
     },
+
     {
       "apiVersion": "2018-02-01",
       "condition": "[equals(parameters('vNet'), 'New')]",
@@ -329,13 +324,7 @@
         }
       }
     }
-  ],
-  "outputs": {
-    "providerOutput": {
-      "value": "[providers(parameters('providerNamespace'), parameters('resourceType'))]",
-      "type": "object"
-    }
-  }
+  ]
 }
 
 
