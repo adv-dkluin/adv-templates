@@ -36,7 +36,9 @@
     "vNet": {
       "type": "string",
       "defaultValue": "New",
-      "allowedValues": "[variables('Vnets')]",
+      "allowedValues": [
+        "[variables('Vnets')]"
+      ],
       "metadata": {
         "description": "New or existing vNet for the VM"
       }
