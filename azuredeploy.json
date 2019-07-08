@@ -37,7 +37,8 @@
       "type": "string",
       "defaultValue": "New",
       "allowedValues": [
-        "[variables('Vnets')]"
+        "New",
+        "Existing"
       ],
       "metadata": {
         "description": "New or existing vNet for the VM"
@@ -148,18 +149,7 @@
     "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]",
     "configurationModeFrequencyMins": "240",
     "refreshFrequencyMins": "720",
-    "vmExtensionName": "Microsoft.Powershell.DSC",
-    "Vnets": {
-        "apiVersion": "2018-02-01",
-        "type": "Microsoft.Network/virtualNetworks",
-        "name": "Microsoft.Network/virtualNetworks/read",
-        "display": {
-          "provider": "Microsoft Network",
-          "resource": "Virtual Network",
-          "operation": "Get Virtual Network",
-          "description": "Get the virtual network definition"
-        }
-      }
+    "vmExtensionName": "Microsoft.Powershell.DSC"
   },
   "resources": [
     {
@@ -176,7 +166,6 @@
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
       }
     },
-
     {
       "apiVersion": "2018-02-01",
       "condition": "[equals(parameters('vNet'), 'New')]",
