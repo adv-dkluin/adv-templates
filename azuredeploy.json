@@ -95,6 +95,20 @@
       "metadata": {
         "description": "Name of the AutomationAccount"
       }
+    },
+    "providerNamespace": {
+      "type": "string",
+      "defaultValue": "Microsoft.Network",
+      "metadata": {
+        "description": "Name of the AutomationAccount"
+      }
+    },
+    "resourceType": {
+      "type": "string",
+      "defaultValue": "virtualNetworks",
+      "metadata": {
+        "description": "Name of the AutomationAccount"
+      }
     }
   },
   "variables": {
@@ -315,7 +329,13 @@
         }
       }
     }
-  ]
+  ],
+  "outputs": {
+    "providerOutput": {
+      "value": "[providers(parameters('providerNamespace'), parameters('resourceType'))]",
+      "type": "object"
+    }
+  }
 }
 
 
