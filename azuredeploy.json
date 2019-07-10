@@ -13,6 +13,7 @@
       "defaultValue": "None",
       "allowedValues": [
         "None",
+        "LCM",
         "Webserver",
         "Printserver"
       ],
@@ -149,7 +150,8 @@
     "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]",
     "configurationModeFrequencyMins": "240",
     "refreshFrequencyMins": "720",
-    "vmExtensionName": "Microsoft.Powershell.DSC"
+    "vmExtensionName": "Microsoft.Powershell.DSC",
+    "RegistrationUrl": "[reference(concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))).registrationUrl]"
   },
   "resources": [
     {
@@ -287,9 +289,41 @@
       }
     },
     {
+      "condition": "[equals(parameters('configuration'), 'LCM')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "LCM",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "configuration": {
+            "url": "https://github.com/adv-dkluin/adv-templates/blob/master/WebServer.ps1.zip",
+            "script": "UpdateLCMforAAPull.ps1",
+            "function": "UpdateLCMforAAPull"
+          },
+          "Properties": {
+            "$RegistrationKey": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2015-01-01-preview').Keys[0].value]",
+            "$RegistrationUrl": "[variables('RegistrationUrl')]",
+            "$NodeConfigurationName": "[parameters('virtualMachineName')]"
+
+          }
+        },
+        "protectedSettings": {
+          "registrationKeyPrivate": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2015-01-01-preview').Keys[0].value]"
+        }
+      }
+    },
+    {
       "condition": "[equals(parameters('configuration'), 'Webserver')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('virtualMachineName'),'/', variables('vmExtensionName'))]",
+      "name": "WebServer",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
