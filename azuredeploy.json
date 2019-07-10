@@ -13,7 +13,6 @@
       "defaultValue": "None",
       "allowedValues": [
         "None",
-        "LCM",
         "Webserver",
         "Printserver"
       ],
@@ -288,10 +287,10 @@
       }
     },
     {
-      "condition": "[equals(parameters('configuration'), 'LCM')]",
+      "condition": "[equals(parameters('configuration'), 'Printserver')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "LCM",
-      "apiVersion": "2015-06-15",
+      "name": "Printserver",
+      "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
@@ -303,15 +302,12 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "configuration": {
-            "url": "https://github.com/adv-dkluin/adv-templates/blob/master/UpdateLCMforAAPull.ps1.zip",
-            "script": "UpdateLCMforAAPull.ps1",
-            "function": "UpdateLCMforAAPull"
+            "url": "https://github.com/adv-dkluin/adv-templates/blob/master/PrinterServer.ps1.zip",
+            "script": "PrinterServer.ps1",
+            "function": "PrinterServer"
           },
           "Properties": {
-            "$RegistrationKey": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2015-01-01-preview').Keys[0].value]",
-            "$RegistrationUrl": "[reference(concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))).registrationUrl]",
-            "$NodeConfigurationName": "[parameters('virtualMachineName')]"
-
+            "$MachineName": "[parameters('virtualMachineName')]"
           }
         },
         "protectedSettings": {
