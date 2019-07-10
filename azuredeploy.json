@@ -289,7 +289,7 @@
     {
       "condition": "[equals(parameters('configuration'), 'Printserver')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "Printserver,'/', variables('vmExtensionName')",
+      "name": "PrintServer,'/', variables('vmExtensionName')",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
