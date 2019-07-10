@@ -306,6 +306,9 @@
             "script": "WebServer.ps1",
             "function": "WebServer"
           },
+          "configurationData": {
+
+          },
           "Properties": {
             "$MachineName": "[parameters('virtualMachineName')]"
           }
