@@ -150,8 +150,7 @@
     "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]",
     "configurationModeFrequencyMins": "240",
     "refreshFrequencyMins": "720",
-    "vmExtensionName": "Microsoft.Powershell.DSC",
-    "RegistrationUrl": "[reference(concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))).registrationUrl]"
+    "vmExtensionName": "Microsoft.Powershell.DSC"
   },
   "resources": [
     {
@@ -304,13 +303,13 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "configuration": {
-            "url": "https://github.com/adv-dkluin/adv-templates/blob/master/WebServer.ps1.zip",
+            "url": "https://github.com/adv-dkluin/adv-templates/blob/master/UpdateLCMforAAPull.ps1.zip",
             "script": "UpdateLCMforAAPull.ps1",
             "function": "UpdateLCMforAAPull"
           },
           "Properties": {
             "$RegistrationKey": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2015-01-01-preview').Keys[0].value]",
-            "$RegistrationUrl": "[variables('RegistrationUrl')]",
+            "$RegistrationUrl": "[reference(concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))).registrationUrl]",
             "$NodeConfigurationName": "[parameters('virtualMachineName')]"
 
           }
