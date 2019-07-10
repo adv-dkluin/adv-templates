@@ -302,12 +302,9 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "configuration": {
-            "url": "https://github.com/adv-dkluin/adv-templates/blob/master/WebServer.ps1.zip",
-            "script": "WebServer.ps1",
-            "function": "WebServer"
-          },
-          "configurationData": {
-            "url": "https://raw.githubusercontent.com/adv-dkluin/adv-templates/master/WebServer.psd1"
+            "url": "https://github.com/Azure/azure-quickstart-templates/blob/master/dsc-extension-iis-server-windows-vm/ContosoWebsite.ps1.zip",
+            "script": "ContosoWebsite.ps1",
+            "function": "ContosoWebsite"
           },
           "Properties": {
             "$MachineName": "[parameters('virtualMachineName')]"
