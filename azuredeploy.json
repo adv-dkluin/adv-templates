@@ -302,7 +302,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "configuration": {
-            "url": "https://github.com/adv-dkluin/adv-templates/blob/master/PrinterServer.ps1.zip",
+            "url": "https://github.com/adv-dkluin/adv-templates/blob/master/PrintServer.ps1.zip",
             "script": "PrintServer.ps1",
             "function": "PrintServer"
           },
