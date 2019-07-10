@@ -307,7 +307,7 @@
             "function": "WebServer"
           },
           "configurationData": {
-
+            "url": "https://raw.githubusercontent.com/adv-dkluin/adv-templates/master/WebServer.psd1"
           },
           "Properties": {
             "$MachineName": "[parameters('virtualMachineName')]"
