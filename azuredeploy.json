@@ -149,8 +149,7 @@
     "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]",
     "configurationModeFrequencyMins": "240",
     "refreshFrequencyMins": "720",
-    "vmExtensionName": "Microsoft.Powershell.DSC",
-    "vmExtensionName1": "Microsoft.Powershell.DSC"
+    "vmExtensionName": "Microsoft.Powershell.DSC"
   },
   "resources": [
     {
@@ -290,7 +289,7 @@
     {
       "condition": "[equals(parameters('configuration'), 'Printserver')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('virtualMachineName'),'/', variables('vmExtensionName'))]",
+      "name": "[concat(parameters('virtualMachineName'),'/', 'Microsoft.Powershell.DSC')]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
