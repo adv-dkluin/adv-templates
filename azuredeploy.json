@@ -318,7 +318,7 @@
     {
       "condition": "[equals(parameters('configuration'), 'Webserver')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('virtualMachineName'),'/', variables('vmExtensionName1'))]",
+      "name": "Webserver,'/', variables('vmExtensionName')",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
