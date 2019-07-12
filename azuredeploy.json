@@ -314,6 +314,20 @@
           "registrationKeyPrivate": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2015-01-01-preview').Keys[0].value]"
         }
       }
+    },
+    {
+      "type": "Microsoft.Compute/availabilitySets",
+      "apiVersion": "2019-03-01",
+      "name": "[parameters('availabilitySets_TestAvailabilitySet_name')]",
+      "location": "westeurope",
+      "sku": {
+        "name": "Aligned"
+      },
+      "properties": {
+        "platformUpdateDomainCount": 5,
+        "platformFaultDomainCount": 2,
+        "virtualMachines": []
+      }
     }
   ]
 }
