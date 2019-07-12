@@ -318,15 +318,15 @@
     {
       "type": "Microsoft.Compute/availabilitySets",
       "apiVersion": "2019-03-01",
-      "name": "[parameters('availabilitySets_TestAvailabilitySet_name')]",
-      "location": "westeurope",
+      "name": "availabilitySet1",
+      "location": "[resourceGroup().location]",
       "sku": {
         "name": "Aligned"
       },
       "properties": {
         "platformUpdateDomainCount": 5,
         "platformFaultDomainCount": 2,
-        "virtualMachines": []
+        "managed": true
       }
     }
   ]
