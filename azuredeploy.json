@@ -325,7 +325,7 @@
           "ModulesUrl": "[variables('modulesUrl')]",
           "SasToken": "",
           "ConfigurationFunction": "[variables('configurationFunction')]",
-          "wmfVersion": "4.0",
+          "wmfVersion": "5.1",
           "Properties": {}
         },
         "protectedSettings": {}
