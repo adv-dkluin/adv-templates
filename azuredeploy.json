@@ -307,7 +307,7 @@
     },
 
     {
-      "name": "NodeServer",
+      "name": "[concat(parameters('virtualMachineName'),'/Microsoft.Powershell.DSC')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
