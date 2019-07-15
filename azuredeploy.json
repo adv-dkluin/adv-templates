@@ -307,10 +307,13 @@
       }
     },
     {
-      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'))]",
       "type": "Microsoft.Automation/automationAccounts/configurations",
+      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'))]",
       "apiVersion": "2015-10-31",
       "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('automationAccountName'))]"
+      ],
       "tags": {},
       "properties": {
         "logVerbose": "false",
