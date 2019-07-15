@@ -152,7 +152,8 @@
     "refreshFrequencyMins": "720",
     "vmExtensionName": "dscExtension",
     "modulesUrl": "https://github.com/bayernmunich/AspNetWebApp/blob/master/WebServerConfig5.0.ps1.zip?raw=true",
-    "configurationFunction": "WebServerConfig.ps1\\WebServerConfig"
+    "configurationFunction": "WebServerConfig.ps1\\WebServerConfig",
+    "configurationDescription":  "Dit is een description"
   },
   "resources": [
     {
@@ -306,29 +307,20 @@
       }
     },
     {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('virtualMachineName'), '/', variables('vmExtensionName'))]",
-      "apiVersion": "2015-06-15",
+      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'))]",
+      "type": "Microsoft.Automation/automationAccounts/configurations",
+      "apiVersion": "2015-10-31",
       "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
-      ],
-      "tags": {
-        "displayName": "VM Extensions"
-      },
+      "tags": {},
       "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.19",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "ModulesUrl": "[variables('modulesUrl')]",
-          "SasToken": "",
-          "ConfigurationFunction": "[variables('configurationFunction')]",
-          "wmfVersion": "5.1",
-          "Properties": {}
-        },
-        "protectedSettings": {}
+        "logVerbose": "false",
+        "description": "[variables('configurationDescription')]",
+        "state": "Published",
+        "overwrite": true,
+        "Source": {
+          "type": "uri",
+          "Value": "[variables('modulesUrl')]"
+        }
       }
     }
   ]
