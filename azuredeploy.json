@@ -150,9 +150,9 @@
     "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]",
     "configurationModeFrequencyMins": "240",
     "refreshFrequencyMins": "720",
-    "vmExtensionName": "Microsoft.Powershell.DSC",
-    "modulesUrl": "https://github.com/Azure/azure-quickstart-templates/raw/master/dsc-extension-azure-automation-pullserver/UpdateLCMforAAPull.zip",
-    "configurationFunction": "UpdateLCMforAAPull.ps1\\ConfigureLCMforAAPull"
+    "vmExtensionName": "dscExtension",
+    "modulesUrl": "https://github.com/bayernmunich/AspNetWebApp/blob/master/WebServerConfig5.0.ps1.zip?raw=true",
+    "configurationFunction": "WebServerConfig.ps1\\WebServerConfig"
   },
   "resources": [
     {
@@ -305,80 +305,30 @@
         }
       }
     },
-
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "(parameters('virtualMachineName'),'/Microsoft.Powershell.DSC')",
+      "name": "[concat(parameters('virtualMachineName'), copyindex(),'/', variables('vmExtensionName'))]",
       "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
       ],
+      "tags": {
+        "displayName": "VM Extensions"
+      },
       "properties": {
         "publisher": "Microsoft.Powershell",
         "type": "DSC",
         "typeHandlerVersion": "2.19",
         "autoUpgradeMinorVersion": true,
-        "protectedSettings": {
-          "Items": {
-            "registrationKeyPrivate": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2015-01-01-preview').Keys[0].value]"
-          }
-        },
         "settings": {
           "ModulesUrl": "[variables('modulesUrl')]",
           "SasToken": "",
           "ConfigurationFunction": "[variables('configurationFunction')]",
-          "Properties": [
-            {
-              "Name": "RegistrationKey",
-              "Value": {
-                "UserName": "PLACEHOLDER_DONOTUSE",
-                "Password": "PrivateSettingsRef:registrationKeyPrivate"
-              },
-              "TypeName": "System.Management.Automation.PSCredential"
-            },
-            {
-              "Name": "RegistrationUrl",
-              "Value": "[reference(concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))).registrationUrl]",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "NodeConfigurationName",
-              "Value": "[concat(parameters('configuration'),'.',tolower(parameters('virtualMachineName')))]",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "ConfigurationMode",
-              "Value": "ApplyandAutoCorrect",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "ConfigurationModeFrequencyMins",
-              "Value": "[variables('configurationModeFrequencyMins')]",
-              "TypeName": "System.Int32"
-            },
-            {
-              "Name": "RefreshFrequencyMins",
-              "Value": "[variables('refreshFrequencyMins')]",
-              "TypeName": "System.Int32"
-            },
-            {
-              "Name": "RebootNodeIfNeeded",
-              "Value": true,
-              "TypeName": "System.Boolean"
-            },
-            {
-              "Name": "ActionAfterReboot",
-              "Value": "ContinueConfiguration",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "AllowModuleOverwrite",
-              "Value": false,
-              "TypeName": "System.Boolean"
-            }
-          ]
-        }
+          "wmfVersion": "4.0",
+          "Properties": {}
+        },
+        "protectedSettings": {}
       }
     }
   ]
