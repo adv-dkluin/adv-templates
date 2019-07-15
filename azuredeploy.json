@@ -157,19 +157,6 @@
   },
   "resources": [
     {
-      "type": "Microsoft.Compute/availabilitySets",
-      "apiVersion": "2019-03-01",
-      "name": "[variables('availabilitySetName')]",
-      "location": "[resourceGroup().location]",
-      "sku": {
-        "name": "Aligned"
-      },
-      "properties": {
-        "platformUpdateDomainCount": 5,
-        "platformFaultDomainCount": 2
-      }
-    },
-    {
       "apiVersion": "2018-02-01",
       "type": "Microsoft.Network/publicIPAddresses",
       "sku": {
