@@ -315,7 +315,7 @@
       }
     },
     {
-      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '/', variables('Compilation'))]",
+      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '/', parameters('virtualMachineName'))]",
       "type": "Microsoft.Automation/automationAccounts/compilationjobs",
       "apiVersion": "2015-10-31",
       "properties": {
