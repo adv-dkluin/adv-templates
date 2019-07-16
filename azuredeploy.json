@@ -314,18 +314,6 @@
       }
     },
     {
-      "name": "[concat(parameters('automationAccountName'), '/complicationjobs')]",
-      "type": "Microsoft.Automation/automationAccounts/compilationjobs",
-      "apiVersion": "2015-10-31",
-      "properties": {
-        "configuration": {
-          "name": "parameters('configuration')"
-        },
-        "incrementNodeConfigurationBuild": false
-      },
-      "location": "[resourceGroup().location]"
-    },
-    {
       "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '.', variables('vmExtensionName'))]",
       "type": "Microsoft.Automation/automationAccounts/nodeConfigurations",
       "apiVersion": "2018-01-15",
@@ -342,6 +330,78 @@
         "source": {
           "type": "embeddedContent",
           "value": "[variables('modulesUrl')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('virtualMachineName'), '/Microsoft.Powershell.DSC')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": true,
+        "protectedSettings": {
+          "Items": {
+            "registrationKeyPrivate": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')), '2015-01-01-preview').Keys[0].value]"
+          }
+        },
+        "settings": {
+          "Properties": [
+            {
+              "Name": "RegistrationKey",
+              "Value": {
+                "UserName": "PLACEHOLDER_DONOTUSE",
+                "Password": "PrivateSettingsRef:registrationKeyPrivate"
+              },
+              "TypeName": "System.Management.Automation.PSCredential"
+            },
+            {
+              "Name": "RegistrationUrl",
+              "Value": "[reference(concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))).registrationUrl]",
+              "TypeName": "System.String"
+            },
+            {
+              "Name": "NodeConfigurationName",
+              "Value": "[concat(parameters('configuration'), '.',  variables('vmExtensionName'))]",
+              "TypeName": "System.String"
+            },
+            {
+              "Name": "ConfigurationMode",
+              "Value": "ApplyandAutoCorrect",
+              "TypeName": "System.String"
+            },
+            {
+              "Name": "ConfigurationModeFrequencyMins",
+              "Value": "[variables('configurationModeFrequencyMins')]",
+              "TypeName": "System.Int32"
+            },
+            {
+              "Name": "RefreshFrequencyMins",
+              "Value": "[variables('refreshFrequencyMins')]",
+              "TypeName": "System.Int32"
+            },
+            {
+              "Name": "RebootNodeIfNeeded",
+              "Value": true,
+              "TypeName": "System.Boolean"
+            },
+            {
+              "Name": "ActionAfterReboot",
+              "Value": "ContinueConfiguration",
+              "TypeName": "System.String"
+            },
+            {
+              "Name": "AllowModuleOverwrite",
+              "Value": false,
+              "TypeName": "System.Boolean"
+            }
+          ]
         }
       }
     }
