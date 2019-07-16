@@ -136,7 +136,7 @@
       }
     },
     "windowsOSVersion": "2016-Datacenter",
-    "dataDiskSize": 1024,
+    "dataDiskSize": 128,
     "availabilitySetName": "ADV-AvailabilitySet",
     "subnetName": "[concat(toLower(parameters('virtualMachineName')),'-subnet')]",
     "imagePublisher": "MicrosoftWindowsServer",
@@ -152,7 +152,6 @@
     "refreshFrequencyMins": "720",
     "vmExtensionName": "webserver",
     "modulesUrl": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/WebServerConfig.ps1",
-    "configurationFunction": "WebServerConfig.ps1\\WebServerConfig",
     "configurationDescription": "Dit is een description"
   },
   "resources": [
