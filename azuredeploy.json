@@ -153,8 +153,7 @@
     "vmExtensionName": "webserver",
     "modulesUrl": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/WebServerConfig.ps1",
     "configurationFunction": "WebServerConfig.ps1\\WebServerConfig",
-    "configurationDescription": "Dit is een description",
-    "Compilation": "CompilationJob" 
+    "configurationDescription": "Dit is een description"
   },
   "resources": [
     {
@@ -315,7 +314,7 @@
       }
     },
     {
-      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '/', parameters('virtualMachineName'))]",
+      "name": "[concat('Compilation', uniqueString(resourceGroup().id))]",
       "type": "Microsoft.Automation/automationAccounts/compilationjobs",
       "apiVersion": "2015-10-31",
       "properties": {
