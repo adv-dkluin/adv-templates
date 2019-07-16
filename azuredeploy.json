@@ -314,7 +314,7 @@
       }
     },
     {
-      "name": "[concat('Compilation', uniqueString(resourceGroup().id))]",
+      "name": "[concat(parameters('automationAccountName'), '/complicationjobs')]",
       "type": "Microsoft.Automation/automationAccounts/compilationjobs",
       "apiVersion": "2015-10-31",
       "properties": {
