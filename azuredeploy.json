@@ -150,10 +150,11 @@
     "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]",
     "configurationModeFrequencyMins": "240",
     "refreshFrequencyMins": "720",
-    "vmExtensionName": "dscExtension",
+    "vmExtensionName": "webserver",
     "modulesUrl": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/WebServerConfig.ps1",
     "configurationFunction": "WebServerConfig.ps1\\WebServerConfig",
-    "configurationDescription": "Dit is een description"
+    "configurationDescription": "Dit is een description",
+    "Compilation": "CompilationJob" 
   },
   "resources": [
     {
@@ -310,6 +311,38 @@
         "Source": {
           "type": "uri",
           "Value": "[variables('modulesUrl')]"
+        }
+      }
+    },
+    {
+      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '/', variables('Compilation'))]",
+      "type": "Microsoft.Automation/automationAccounts/compilationjobs",
+      "apiVersion": "2015-10-31",
+      "properties": {
+        "configuration": {
+          "name": "parameters('configuration')"
+        },
+        "incrementNodeConfigurationBuild": false
+      },
+      "location": "[resourceGroup().location]"
+    },
+    {
+      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '.', variables('vmExtensionName'))]",
+      "type": "Microsoft.Automation/automationAccounts/nodeConfigurations",
+      "apiVersion": "2018-01-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/configurations/', parameters('configuration'))]"
+      ],
+      "properties": {
+        "name": "[concat(parameters('configuration'), '.',  variables('vmExtensionName'))]",
+        "configuration": {
+          "name": "[concat(parameters('configuration'))]"
+        },
+        "incrementNodeConfigurationBuild": false,
+        "source": {
+          "type": "embeddedContent",
+          "value": "[variables('modulesUrl')]"
         }
       }
     }
