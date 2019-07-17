@@ -154,7 +154,8 @@
     "configurationUrl": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/WebServerConfig.ps1",
     "configurationDescription": "Dit is een description",
     "modulesUrl": "https://github.com/bayernmunich/AspNetWebApp/blob/master/WebServerConfig5.0.ps1.zip?raw=true",
-    "configurationFunction": "WebServerConfig.ps1\\WebServerConfig"
+    "configurationFunction": "WebServerConfig.ps1\\WebServerConfig",
+    "compilationjob":  "job1"
   },
   "resources": [
     {
@@ -315,16 +316,20 @@
       }
     },
     {
-      "name": "string",
+      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '.', variables('compilationjob'))]",
       "type": "Microsoft.Automation/automationAccounts/compilationjobs",
       "apiVersion": "2018-01-15",
-      "properties": {
-        "configuration": {
-          "name": "string"
-        },
-        "parameters": {},
-        "incrementNodeConfigurationBuild": "boolean"
-      }
+      "dependsOn": [
+        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]",
+        "[concat(parameters('automationAccountName'), '/', parameters('configuration'))]"
+      ],
+        "properties": {
+          "configuration": {
+            "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'))]"
+          },
+          "parameters": {},
+          "incrementNodeConfigurationBuild": false
+        }
     },
     {
       "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '.', variables('vmExtensionName'))]",
@@ -341,7 +346,7 @@
         },
         "incrementNodeConfigurationBuild": false,
         "source": {
-          "type": "embeddedContent",
+          "type": "uri",
           "value": "[variables('configurationUrl')]"
         }
       }
@@ -365,8 +370,6 @@
           }
         },
         "settings": {
-          "ModulesUrl": "[variables('modulesUrl')]",
-          "ConfigurationFunction": "[variables('configurationFunction')]",
           "Properties": [
             {
               "Name": "RegistrationKey",
