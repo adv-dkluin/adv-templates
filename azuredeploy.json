@@ -387,7 +387,7 @@
             },
             {
               "Name": "RebootNodeIfNeeded",
-              "Value": true,
+              "Value": false,
               "TypeName": "System.Boolean"
             },
             {
