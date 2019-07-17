@@ -397,7 +397,7 @@
             },
             {
               "Name": "AllowModuleOverwrite",
-              "Value": false,
+              "Value": true,
               "TypeName": "System.Boolean"
             }
           ]
