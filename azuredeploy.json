@@ -151,7 +151,7 @@
     "configurationModeFrequencyMins": "240",
     "refreshFrequencyMins": "720",
     "vmExtensionName": "localhost",
-    "configurationUrl": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/WebServerConfig.ps1",
+    "modulesUrl": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/WebServerConfig.MOF",
     "configurationDescription": "Dit is een description"
   },
   "resources": [
@@ -308,7 +308,7 @@
         "overwrite": true,
         "Source": {
           "type": "uri",
-          "Value": "[variables('configurationUrl')]"
+          "Value": "[variables('modulesUrl')]"
         }
       }
     },
@@ -328,7 +328,7 @@
         "incrementNodeConfigurationBuild": false,
         "source": {
           "type": "embeddedContent",
-          "value": "[variables('configurationUrl')]"
+          "value": "[variables('modulesUrl')]"
         }
       }
     },
