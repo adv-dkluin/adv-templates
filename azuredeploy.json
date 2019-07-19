@@ -156,8 +156,7 @@
     "refreshFrequencyMins": "720",
     "vmExtensionName": "localhost",
     "modulesUrl": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/WebServerConfig.MOF",
-    "configurationDescription": "Dit is een description",
-    "guidName": "[concat(uniqueString(parameters('guidValue')))]"
+    "configurationDescription": "Dit is een description"
   },
   "resources": [
     {
@@ -351,7 +350,7 @@
       }
     },
     {
-      "name": "[variables('guidName')]",
+      "name": "[parameters('guidValue')]",
       "type": "Microsoft.Automation/automationAccounts/compilationjobs",
       "apiVersion": "2015-10-31",
       "properties": {
