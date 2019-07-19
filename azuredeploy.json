@@ -314,18 +314,6 @@
       }
     },
     {
-      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '/', parameters('virtualMachineName'))]",
-      "type": "Microsoft.Automation/automationAccounts/compilationjobs",
-      "apiVersion": "2015-10-31",
-      "properties": {
-        "configuration": {
-          "name": "parameters('configuration')"
-        },
-        "incrementNodeConfigurationBuild": false
-      },
-      "location": "[resourceGroup().location]"
-    },
-    {
       "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '.', variables('vmExtensionName'))]",
       "type": "Microsoft.Automation/automationAccounts/nodeConfigurations",
       "apiVersion": "2018-01-15",
