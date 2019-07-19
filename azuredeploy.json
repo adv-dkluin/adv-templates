@@ -95,6 +95,13 @@
       "metadata": {
         "description": "Name of the AutomationAccount"
       }
+    },
+    "compileName": {
+      "type": "string",
+      "metadata": {
+        "description": "Unique value to identify compilation job"
+      },
+      "defaultValue": "[guid(resourceGroup().id, resourcegroup().name)]"
     }
   },
   "variables": {
@@ -313,7 +320,7 @@
       }
     },
     {
-      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'),'/', parameters('virtualMachineName')]",
+      "name": "[parameters('compileName')]",
       "type": "Microsoft.Automation/automationAccounts/compilationjobs",
       "apiVersion": "2015-10-31",
       "properties": {
