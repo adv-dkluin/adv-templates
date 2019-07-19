@@ -95,6 +95,10 @@
       "metadata": {
         "description": "Name of the AutomationAccount"
       }
+    },
+    "guidValue": {
+      "type": "string",
+      "defaultValue": "[newGuid()]"
     }
   },
   "variables": {
@@ -152,7 +156,8 @@
     "refreshFrequencyMins": "720",
     "vmExtensionName": "localhost",
     "modulesUrl": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/WebServerConfig.MOF",
-    "configurationDescription": "Dit is een description"
+    "configurationDescription": "Dit is een description",
+    "guidName": "[concat(uniqueString(parameters('guidValue')))]"
   },
   "resources": [
     {
@@ -346,7 +351,7 @@
       }
     },
     {
-      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'),'/', parameters('virtualMachineName'))]",
+      "name": "[variables('guidName')]",
       "type": "Microsoft.Automation/automationAccounts/compilationjobs",
       "apiVersion": "2015-10-31",
       "properties": {
