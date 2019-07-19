@@ -151,7 +151,7 @@
     "configurationModeFrequencyMins": "240",
     "refreshFrequencyMins": "720",
     "vmExtensionName": "localhost",
-    "modulesUrl": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/WebServerConfig.MOF",
+    "modulesUrl": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/localhost.mof",
     "configurationDescription": "Dit is een description",
     "Compilation": "CompilationJob"
   },
