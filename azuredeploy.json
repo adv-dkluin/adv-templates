@@ -152,7 +152,8 @@
     "refreshFrequencyMins": "720",
     "vmExtensionName": "localhost",
     "modulesUrl": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/WebServerConfig.MOF",
-    "configurationDescription": "Dit is een description"
+    "configurationDescription": "Dit is een description",
+    "compilationjob": "job1"
   },
   "resources": [
     {
@@ -310,6 +311,22 @@
           "type": "uri",
           "Value": "[variables('modulesUrl')]"
         }
+      }
+    },
+    {
+      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '.', variables('compilationjob'))]",
+      "type": "Microsoft.Automation/automationAccounts/compilationjobs",
+      "apiVersion": "2018-01-15",
+      "dependsOn": [
+        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]",
+        "[concat(parameters('automationAccountName'), '/', parameters('configuration'))]"
+      ],
+      "properties": {
+        "configuration": {
+          "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'))]"
+        },
+        "parameters": {},
+        "incrementNodeConfigurationBuild": false
       }
     },
     {
