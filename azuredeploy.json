@@ -313,9 +313,12 @@
       }
     },
     {
-      "name": "0554437c-bcc0-4ab0-bd7f-4fe557acc379",
       "type": "Microsoft.Automation/automationAccounts/compilationjobs",
       "apiVersion": "2015-10-31",
+      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '/config')]",
+      "dependsOn": [
+        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/configurations/', parameters('configuration'))]"
+      ],
       "properties": {
         "configuration": {
           "name": "[concat(parameters('configuration'))]"
