@@ -95,12 +95,6 @@
       "metadata": {
         "description": "Name of the AutomationAccount"
       }
-    },
-    "jobId": {
-      "type": "string",
-      "metadata": {
-        "description": "the job id to compile the configuration"
-      }
     }
   },
   "variables": {
@@ -316,23 +310,6 @@
           "type": "uri",
           "Value": "[variables('modulesUrl')]"
         }
-      }
-    },
-    {
-      "type": "Microsoft.Automation/automationAccounts/compilationjobs",
-      "apiVersion": "2015-10-31",
-      "name": "[parameters('jobId')]",
-      "dependsOn": [
-        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]",
-        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/configurations/', parameters('configuration'))]"
-      ],
-      "properties": {
-        "configuration": {
-          "name": "[concat(parameters('configuration'))]"
-
-        },
-        "parameters": {},
-        "incrementNodeConfigurationBuild": false
       }
     },
     {
