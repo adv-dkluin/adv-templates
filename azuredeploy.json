@@ -95,6 +95,12 @@
       "metadata": {
         "description": "Name of the AutomationAccount"
       }
+    },
+    "jobId": {
+      "type": "string",
+      "metadata": {
+        "description": "the job id to compile the configuration"
+      }
     }
   },
   "variables": {
@@ -315,8 +321,9 @@
     {
       "type": "Microsoft.Automation/automationAccounts/compilationjobs",
       "apiVersion": "2015-10-31",
-      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '/config')]",
+      "name": "[parameters('jobId')]",
       "dependsOn": [
+        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]",
         "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/configurations/', parameters('configuration'))]"
       ],
       "properties": {
