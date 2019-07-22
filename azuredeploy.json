@@ -313,7 +313,7 @@
       }
     },
     {
-      "name": "[guid(parameters('automationAccountName'),parameters('configuration')]",
+      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '/compilationjob')]",
       "type": "Microsoft.Automation/automationAccounts/compilationjobs",
       "apiVersion": "2018-01-15",
       "tags": {},
