@@ -313,7 +313,7 @@
       }
     },
     {
-      "name": "[guid(resourceGroup().id, deployment().name)]",
+      "name": "[parameters('automationAccountName').jobGuid]",
       "type": "Microsoft.Automation/automationAccounts/compilationjobs",
       "apiVersion": "2018-01-15",
       "dependsOn": [
