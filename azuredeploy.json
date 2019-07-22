@@ -313,6 +313,24 @@
       }
     },
     {
+      "name": "[concat(parameters('configuration'), '.',  variables('vmExtensionName'))]",
+      "type": "Microsoft.Automation/automationAccounts/compilationjobs",
+      "apiVersion": "2018-01-15",
+      "dependsOn": [
+        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]",
+        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/', parameters('configuration'))]"
+      ],
+      "properties": {
+        "configuration": {
+          "name": "[concat(parameters('configuration'))]"
+        },
+        "parameters": {},
+        "incrementNodeConfigurationBuild": "false"
+      },
+      "location": "string",
+      "tags": {}
+    },
+    {
       "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'), '.', variables('vmExtensionName'))]",
       "type": "Microsoft.Automation/automationAccounts/nodeConfigurations",
       "apiVersion": "2018-01-15",
