@@ -302,7 +302,7 @@
         "state": "Published",
         "overwrite": "true",
         "source": {
-          "type": "uri",
+          "type": "embeddedContent",
           "value": "[variables('modulesUrl')]"
         }
       }
