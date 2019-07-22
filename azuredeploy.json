@@ -321,7 +321,7 @@
         "configuration": {
           "name": "[concat(parameters('configuration'))]"
         },
-        "incrementNodeConfigurationBuild": "true"
+        "incrementNodeConfigurationBuild": false
       }
     },
     {
