@@ -314,7 +314,7 @@
     },
     {
       "type": "Microsoft.Automation/automationAccounts/compilationjobs",
-      "name": "[concat(parameters('automationAccountName'),'/compilationjobs/',parameters('configuration'))]",
+      "name": "[concat(parameters('automationAccountName'),'/compilationjobs')]",
       "apiVersion": "2018-01-15",
       "tags": {},
       "dependsOn": [
@@ -325,7 +325,7 @@
         "configuration": {
           "name": "[concat(parameters('configuration'))]"
         },
-        "incrementNodeConfigurationBuild": "true"
+        "incrementNodeConfigurationBuild": "false"
       }
     },
     {
