@@ -293,19 +293,22 @@
       }
     },
     {
-      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'))]",
       "type": "Microsoft.Automation/automationAccounts/configurations",
-      "apiVersion": "2018-01-15",
+      "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'))]",
+      "apiVersion": "2015-10-31",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
       ],
+      "tags": {},
       "properties": {
+        "logVerbose": "false",
+        "description": "[variables('configurationDescription')]",
         "state": "Published",
-        "overwrite": "true",
-        "source": {
-          "type": "embeddedContent",
-          "value": "[variables('modulesUrl')]"
+        "overwrite": true,
+        "Source": {
+          "type": "uri",
+          "Value": "[variables('modulesUrl')]"
         }
       }
     },
