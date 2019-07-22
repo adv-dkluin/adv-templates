@@ -137,7 +137,6 @@
     },
     "windowsOSVersion": "2016-Datacenter",
     "dataDiskSize": 128,
-    "availabilitySetName": "ADV-AvailabilitySet",
     "subnetName": "[concat(toLower(parameters('virtualMachineName')),'-subnet')]",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
@@ -226,9 +225,6 @@
         "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
       ],
       "properties": {
-        "availabilitySet": {
-          "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetName'))]"
-        },
         "hardwareProfile": {
           "vmSize": "[variables('TS-Size')[parameters('EnvironmentSize')].vmSize]"
         },
