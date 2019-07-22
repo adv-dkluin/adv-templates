@@ -307,7 +307,7 @@
         "state": "Published",
         "overwrite": true,
         "Source": {
-          "type": "embeddedContent",
+          "type": "uri",
           "Value": "[variables('modulesUrl')]"
         }
       }
