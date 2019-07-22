@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "virtualMachineName": {
@@ -293,22 +293,17 @@
       }
     },
     {
-      "type": "Microsoft.Automation/automationAccounts/configurations",
       "name": "[concat(parameters('automationAccountName'), '/', parameters('configuration'))]",
-      "apiVersion": "2015-10-31",
+      "type": "Microsoft.Automation/automationAccounts/configurations",
+      "apiVersion": "2018-01-15",
       "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
-      ],
-      "tags": {},
+      "dependsOn": [],
       "properties": {
-        "logVerbose": "false",
-        "description": "[variables('configurationDescription')]",
         "state": "Published",
-        "overwrite": true,
-        "Source": {
+        "overwrite": "true",
+        "source": {
           "type": "uri",
-          "Value": "[variables('modulesUrl')]"
+          "value": "[variables('modulesUrl')]"
         }
       }
     },
