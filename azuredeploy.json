@@ -378,11 +378,6 @@
               "TypeName": "System.String"
             },
             {
-              "Name": "NodeConfigurationName",
-              "Value": "[concat(parameters('configuration'), '.',  variables('vmExtensionName'))]",
-              "TypeName": "System.String"
-            },
-            {
               "Name": "ConfigurationMode",
               "Value": "ApplyandAutoCorrect",
               "TypeName": "System.String"
