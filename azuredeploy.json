@@ -334,7 +334,7 @@
       ],
       "properties": {
         "configuration": {
-          "name": "[concat(parameters('configuration'),'.',variables('vmExtensionName'))]"
+          "name": "[concat(parameters('configuration'))]"
         },
         "incrementNodeConfigurationBuild": false,
         "source": {
