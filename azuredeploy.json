@@ -333,7 +333,6 @@
         "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/configurations/', parameters('configuration'))]"
       ],
       "properties": {
-        "name": "[concat(parameters('configuration'), '.',  variables('vmExtensionName'))]",
         "configuration": {
           "name": "[concat(parameters('configuration'))]"
         },
