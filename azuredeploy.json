@@ -290,7 +290,7 @@
     },
     {
       "type": "Microsoft.Automation/automationAccounts/runbooks",
-      "name": "[concat(parameters('automationAccountName'),'/runbooks')]",
+      "name": "[concat(parameters('automationAccountName'),'/Delete_VM')]",
       "apiVersion": "2018-06-30",
       "location": "[resourceGroup().location]",
       "dependsOn": [
