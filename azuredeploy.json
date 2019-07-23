@@ -382,6 +382,11 @@
               "TypeName": "System.String"
             },
             {
+              "Name": "NodeConfigurationName",
+              "Value": "[concat(parameters('configuration'), '.', variables('vmExtensionName'))]",
+              "TypeName": "System.String"
+            },
+            {
               "Name": "ConfigurationModeFrequencyMins",
               "Value": "[variables('configurationModeFrequencyMins')]",
               "TypeName": "System.Int32"
