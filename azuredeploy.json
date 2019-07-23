@@ -292,6 +292,7 @@
       "type": "Microsoft.Automation/automationAccounts/runbooks",
       "name": "[concat(parameters('automationAccountName'),'/runbooks')]",
       "apiVersion": "2018-06-30",
+      "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
       ],
