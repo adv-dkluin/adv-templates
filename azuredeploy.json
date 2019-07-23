@@ -339,7 +339,7 @@
         },
         "incrementNodeConfigurationBuild": false,
         "source": {
-          "type": "embeddedContent",
+          "type": "uri",
           "value": "[variables('modulesUrl')]"
         }
       }
