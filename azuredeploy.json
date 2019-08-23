@@ -73,16 +73,9 @@
     },
     "addressPrefix": {
       "type": "string",
-      "defaultValue": "192.168.0.0/21",
+      "defaultValue": "10.2.3.0/24",
       "metadata": {
         "description": "vNet Prefix"
-      }
-    },
-    "Subnets": {
-      "type": "array",
-      "defaultValue": "Subnet2",
-      "metadata": {
-        "description": "Subnet 1 Name"
       }
     },
     "subnet1Name": {
@@ -94,7 +87,7 @@
     },
     "subnet1Prefix": {
       "type": "string",
-      "defaultValue": "192.168.0.0/24",
+      "defaultValue": "10.0.0.0/24",
       "metadata": {
         "description": "Subnet 1 Prefix"
       }
