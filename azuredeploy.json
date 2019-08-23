@@ -78,6 +78,9 @@
         "description": "vNet Prefix"
       }
     },
+    "subnets": {
+      "type": "Array"
+    },
     "subnet1Name": {
       "type": "string",
       "defaultValue": "Subnet1",
