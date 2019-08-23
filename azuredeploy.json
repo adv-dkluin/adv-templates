@@ -98,29 +98,6 @@
         "description": "Amount of Datadisks"
       }
     },
-    "VNetSettings": {
-        "type": "object",
-        "defaultValue": {
-          "name": "VNet1",
-          "location": "eastus",
-          "addressPrefixes": [
-            {
-              "name": "firstPrefix",
-              "addressPrefix": "10.0.0.0/22"
-            }
-          ],
-          "subnets": [
-            {
-              "name": "firstSubnet",
-              "addressPrefix": "10.0.0.0/24"
-            },
-            {
-              "name": "secondSubnet",
-              "addressPrefix": "10.0.1.0/24"
-            }
-          ]
-        }
-      },
     "dataDiskSize": {
       "type": "int",
       "defaultValue": 128,
