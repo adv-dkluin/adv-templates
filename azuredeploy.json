@@ -51,6 +51,41 @@
         "description": "Name of the existing VNET"
       }
     },
+    "addressPrefix": {
+      "type": "string",
+      "defaultValue": "10.2.3.0/24",
+      "metadata": {
+        "description": "vNet Prefix"
+      }
+    },
+    "subnet1Name": {
+      "type": "string",
+      "defaultValue": "Subnet1",
+      "metadata": {
+        "description": "Subnet 1 Name"
+      }
+    },
+    "subnet1Prefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/24",
+      "metadata": {
+        "description": "Subnet 1 Prefix"
+      }
+    },
+    "subnet2Name": {
+      "type": "string",
+      "defaultValue": "Subnet2",
+      "metadata": {
+        "description": "Subnet 2 Name"
+      }
+    },
+    "subnet2Prefix": {
+      "type": "string",
+      "defaultValue": "10.0.1.0/24",
+      "metadata": {
+        "description": "Subnet 2 Prefix"
+      }
+    },
     "EnvironmentSize": {
       "type": "string",
       "defaultValue": "DS1_v2   | 1 Core | 4GB RAM",
@@ -137,14 +172,11 @@
     },
     "windowsOSVersion": "2016-Datacenter",
     "dataDiskSize": 128,
-    "subnetName": "[concat(toLower(parameters('virtualMachineName')),'-subnet')]",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
     "OSDiskName": "[concat(toLower(parameters('virtualMachineName')),'OSDisk')]",
-    "addressPrefix": "10.2.3.0/24",
-    "subnetPrefix": "10.2.3.0/24",
     "publicIPAddressType": "Dynamic",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetName'))]",
+    "subnet1Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnet1Name'))]",
     "networkInterfaceName": "[concat(toLower(parameters('virtualMachineName')),'-nic')]",
     "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]",
     "configurationModeFrequencyMins": "240",
@@ -176,14 +208,20 @@
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "[variables('addressPrefix')]"
+            "[parameters('addressPrefix')]"
           ]
         },
         "subnets": [
           {
-            "name": "[variables('subnetName')]",
+            "name": "[parameters('subnet1Name')]",
             "properties": {
-              "addressPrefix": "[variables('subnetPrefix')]"
+              "addressPrefix": "[parameters('subnet1Prefix')]"
+            }
+          },
+          {
+            "name": "[parameters('subnet2Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet2Prefix')]"
             }
           }
         ]
@@ -209,7 +247,7 @@
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpAddressName'))]"
               },
               "subnet": {
-                "id": "[variables('subnetRef')]"
+                "id": "[variables('subnet1Ref')]"
               }
             }
           }
@@ -285,23 +323,6 @@
       "properties": {
         "sku": {
           "name": "Basic"
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Automation/automationAccounts/runbooks",
-      "name": "[concat(parameters('automationAccountName'),'/Delete_VM')]",
-      "apiVersion": "2018-06-30",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
-      ],
-      "properties": {
-        "runbookType": "PowerShell",
-        "logProgress": true,
-        "logVerbose": true,
-        "publishContentLink": {
-          "uri": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/Delete_VM.ps1"
         }
       }
     },
