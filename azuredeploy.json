@@ -72,20 +72,6 @@
         "description": "Subnet 1 Prefix"
       }
     },
-    "subnet2Name": {
-      "type": "string",
-      "defaultValue": "Subnet2",
-      "metadata": {
-        "description": "Subnet 2 Name"
-      }
-    },
-    "subnet2Prefix": {
-      "type": "string",
-      "defaultValue": "10.0.1.0/24",
-      "metadata": {
-        "description": "Subnet 2 Prefix"
-      }
-    },
     "EnvironmentSize": {
       "type": "string",
       "defaultValue": "DS1_v2   | 1 Core | 4GB RAM",
@@ -217,17 +203,22 @@
             "properties": {
               "addressPrefix": "[parameters('subnet1Prefix')]"
             }
-          },
-          {
-            "name": "[parameters('subnet2Name')]",
-            "properties": {
-              "addressPrefix": "[parameters('subnet2Prefix')]"
-            }
           }
         ]
       },
       "type": "Microsoft.Network/virtualNetworks"
     },
+    {
+      "apiVersion": "2018-04-01",
+      "condition": "[equals(parameters('vNet'), 'Existing')]",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "[concat(parameters('virtualNetworkName'), '/', parameters('subnet1Name'))]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressPrefix": "[parameters('subnet1Prefix')]"
+      }
+    },
+
     {
       "apiVersion": "2018-02-01",
       "type": "Microsoft.Network/networkInterfaces",
