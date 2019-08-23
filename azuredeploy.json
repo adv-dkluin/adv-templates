@@ -33,6 +33,26 @@
         "description": "The admin password of the VM"
       }
     },
+    "EnvironmentSize": {
+      "type": "string",
+      "defaultValue": "DS1_v2   | 1 Core | 4GB RAM",
+      "allowedValues": [
+        "A1_v2    | 1 Core | 2GB RAM",
+        "DS1_v2   | 1 Core | 4GB RAM",
+        "A2_v2    | 2 Core | 4GB RAM",
+        "DS2_v3   | 2 Core | 8GB RAM",
+        "A4_v2    | 4 Core | 8GB RAM",
+        "DS4_v3   | 4 Core | 16GB RAM",
+        "A8_v2    | 8 Core | 16GB RAM",
+        "B2s      | 2 Core | 4GB RAM",
+        "B2ms     | 2 Core | 8GB RAM",
+        "B4ms     | 4 Core | 16GB RAM",
+        "B8ms     | 4 Core | 32GB RAM"
+      ],
+      "metadata": {
+        "description": "Medium for webserver. Large for Printserver"
+      }
+    },
     "vNet": {
       "type": "string",
       "defaultValue": "New",
@@ -72,29 +92,20 @@
         "description": "Subnet 1 Prefix"
       }
     },
-    "EnvironmentSize": {
-      "type": "string",
-      "defaultValue": "DS1_v2   | 1 Core | 4GB RAM",
-      "allowedValues": [
-        "A1_v2    | 1 Core | 2GB RAM",
-        "DS1_v2   | 1 Core | 4GB RAM",
-        "A2_v2    | 2 Core | 4GB RAM",
-        "DS2_v3   | 2 Core | 8GB RAM",
-        "A4_v2    | 4 Core | 8GB RAM",
-        "DS4_v3   | 4 Core | 16GB RAM",
-        "A8_v2    | 8 Core | 16GB RAM",
-        "B2s      | 2 Core | 4GB RAM",
-        "B2ms     | 2 Core | 8GB RAM",
-        "B4ms     | 4 Core | 16GB RAM",
-        "B8ms     | 4 Core | 32GB RAM"
-      ],
-      "metadata": {
-        "description": "Medium for webserver. Large for Printserver"
-      }
-    },
     "DataDisks": {
       "type": "int",
       "defaultValue": "1",
+      "metadata": {
+        "description": "Amount of Datadisks"
+      }
+    },
+    "dataDiskSize": {
+      "type": "int",
+      "defaultValue": "128",
+      "allowedValues": [
+        "128",
+        "256"
+      ],
       "metadata": {
         "description": "Amount of Datadisks"
       }
@@ -157,7 +168,6 @@
       }
     },
     "windowsOSVersion": "2016-Datacenter",
-    "dataDiskSize": 128,
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
     "OSDiskName": "[concat(toLower(parameters('virtualMachineName')),'OSDisk')]",
@@ -285,7 +295,7 @@
               "count": "[parameters('DataDisks')]",
               "input": {
                 "name": "[concat(parameters('virtualMachineName'),'DataDisk',copyIndex('dataDisks'))]",
-                "diskSizeGB": "[variables('dataDiskSize')]",
+                "diskSizeGB": "[parameters('dataDiskSize')]",
                 "lun": "[copyIndex('dataDisks')]",
                 "createOption": "Empty",
                 "managedDisk": {
