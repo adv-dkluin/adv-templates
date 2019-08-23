@@ -101,10 +101,10 @@
     },
     "dataDiskSize": {
       "type": "int",
-      "defaultValue": "128",
+      "defaultValue": 128,
       "allowedValues": [
-        "128",
-        "256"
+        128,
+        256
       ],
       "metadata": {
         "description": "Amount of Datadisks"
