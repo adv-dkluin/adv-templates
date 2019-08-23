@@ -13,8 +13,7 @@
       "defaultValue": "None",
       "allowedValues": [
         "None",
-        "WebServerConfig",
-        "Printserver"
+        "WebServerConfig"
       ],
       "metadata": {
         "description": "Name of the configuration"
