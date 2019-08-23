@@ -98,8 +98,7 @@
         "description": "Amount of Datadisks"
       }
     },
-    {
-      "VNetSettings": {
+    "VNetSettings": {
         "type": "object",
         "defaultValue": {
           "name": "VNet1",
@@ -121,8 +120,7 @@
             }
           ]
         }
-      }
-    },
+      },
     "dataDiskSize": {
       "type": "int",
       "defaultValue": 128,
