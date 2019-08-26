@@ -308,9 +308,9 @@
       }
     },
     {
+      "condition": "[equals(parameters('Automationaccount'), 'New')]",
       "comments": "Automation account for DSC",
       "apiVersion": "2015-10-31",
-      "condition": "[equals(parameters('Automationaccount'), 'New')]",
       "location": "[resourceGroup().location]",
       "name": "[variables('automationAccountName')]",
       "type": "Microsoft.Automation/automationAccounts",
