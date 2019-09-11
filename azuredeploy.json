@@ -8,6 +8,14 @@
         "description": "The name of the VM"
       }
     },
+    "location": {
+      "type": "string",
+      "defaultValue": "westeurope",
+      "allowedValues": [
+        "westeurope",
+        "northeurope"
+      ]
+    },
     "configuration": {
       "type": "string",
       "defaultValue": "None",
@@ -31,6 +39,16 @@
       "metadata": {
         "description": "The admin password of the VM"
       }
+    },
+
+    "windowsOSVersion": {
+      "type": "string",
+      "defaultValue": "2016-Datacenter",
+      "allowedValues": [
+        "2012-R2-Datacenter",
+        "2016-Datacenter",
+        "2019-Datacenter"
+      ]
     },
     "EnvironmentSize": {
       "type": "string",
@@ -148,7 +166,6 @@
         "vmSize": "Standard_B8ms"
       }
     },
-    "windowsOSVersion": "2016-Datacenter",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
     "OSDiskName": "[concat(toLower(parameters('virtualMachineName')),'OSDisk')]",
@@ -169,7 +186,7 @@
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[variables('networkSecurityGroupName')]",
-      "location": "[resourceGroup().location]",
+      "location": "parameters(location)",
       "properties": {
         "securityRules": [
           {
@@ -197,7 +214,7 @@
         "tier": "Regional"
       },
       "name": "[variables('publicIpAddressName')]",
-      "location": "[resourceGroup().location]",
+      "location": "parameters(location)",
       "properties": {
         "publicIPAddressVersion": "IPv4",
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
@@ -206,7 +223,7 @@
     {
       "apiVersion": "2018-02-01",
       "condition": "[equals(parameters('vNet'), 'New')]",
-      "location": "[resourceGroup().location]",
+      "location": "parameters(location)",
       "name": "[parameters('virtualNetworkName')]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]"
@@ -236,7 +253,7 @@
       "condition": "[equals(parameters('vNet'), 'Existing')]",
       "type": "Microsoft.Network/virtualNetworks/subnets",
       "name": "[concat(parameters('virtualNetworkName'), '/', parameters('subnet1Name'))]",
-      "location": "[resourceGroup().location]",
+      "location": "parameters(location)",
       "properties": {
         "addressPrefix": "[parameters('subnet1Prefix')]"
       }
@@ -246,7 +263,7 @@
       "apiVersion": "2018-02-01",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('networkInterfaceName')]",
-      "location": "[resourceGroup().location]",
+      "location": "parameters(location)",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIpAddressName'))]",
         "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
@@ -272,7 +289,7 @@
       "apiVersion": "2018-06-01",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('virtualMachineName')]",
-      "location": "[resourceGroup().location]",
+      "location": "parameters(location)",
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
       ],
@@ -299,7 +316,7 @@
           "imageReference": {
             "publisher": "[variables('imagePublisher')]",
             "offer": "[variables('imageOffer')]",
-            "sku": "[variables('windowsOSVersion')]",
+            "sku": "[parameters('windowsOSVersion')]",
             "version": "latest"
           },
           "copy": [
@@ -330,7 +347,7 @@
     {
       "comments": "Automation account for DSC",
       "apiVersion": "2015-10-31",
-      "location": "[resourceGroup().location]",
+      "location": "parameters(location)",
       "name": "[variables('automationAccountName')]",
       "type": "Microsoft.Automation/automationAccounts",
       "properties": {
@@ -344,7 +361,7 @@
       "type": "Microsoft.Automation/automationAccounts/configurations",
       "name": "[concat(variables('automationAccountName'), '/', parameters('configuration'))]",
       "apiVersion": "2015-10-31",
-      "location": "[resourceGroup().location]",
+      "location": "parameters(location)",
       "dependsOn": [
         "[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
       ],
@@ -382,7 +399,7 @@
       "name": "[concat(variables('automationAccountName'), '/', parameters('configuration'), '.', variables('vmExtensionName'))]",
       "type": "Microsoft.Automation/automationAccounts/nodeConfigurations",
       "apiVersion": "2018-01-15",
-      "location": "[resourceGroup().location]",
+      "location": "parameters(location)",
       "dependsOn": [
         "[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'), '/configurations/', parameters('configuration'))]"
       ],
@@ -402,7 +419,7 @@
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('virtualMachineName'), '/Microsoft.Powershell.DSC')]",
       "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
+      "location": "parameters(location)",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
       ],
