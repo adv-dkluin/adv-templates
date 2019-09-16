@@ -9,12 +9,7 @@
       }
     },
     "location": {
-      "type": "string",
-      "defaultValue": "westeurope",
-      "allowedValues": [
-        "westeurope",
-        "northeurope"
-      ]
+      "type": "string"
     },
     "configuration": {
       "type": "string",
