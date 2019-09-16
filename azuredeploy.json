@@ -9,7 +9,14 @@
       }
     },
     "location": {
-      "type": "string"
+      "type": "string",
+      "allowedValues": [
+        "westeurope",
+        "northeurope"
+      ],
+      "metadata": {
+        "description": "Name of the location"
+      }
     },
     "configuration": {
       "type": "string",
@@ -172,7 +179,7 @@
       "apiVersion": "2018-02-01",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('networkInterfaceName')]",
-      "location": "parameters(location)",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIpAddressName'))]"
       ],
@@ -201,7 +208,7 @@
         "tier": "Regional"
       },
       "name": "[variables('publicIpAddressName')]",
-      "location": "parameters(location)",
+      "location": "[parameters('location')]",
       "properties": {
         "publicIPAddressVersion": "IPv4",
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
@@ -211,7 +218,7 @@
       "apiVersion": "2018-06-01",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('virtualMachineName')]",
-      "location": "parameters(location)",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
       ],
@@ -269,7 +276,7 @@
     {
       "comments": "Automation account for DSC",
       "apiVersion": "2015-10-31",
-      "location": "parameters(location)",
+      "location": "[parameters('location')]",
       "name": "[variables('automationAccountName')]",
       "type": "Microsoft.Automation/automationAccounts",
       "properties": {
@@ -283,7 +290,7 @@
       "type": "Microsoft.Automation/automationAccounts/configurations",
       "name": "[concat(variables('automationAccountName'), '/', parameters('configuration'))]",
       "apiVersion": "2015-10-31",
-      "location": "parameters(location)",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'))]"
       ],
@@ -321,7 +328,7 @@
       "name": "[concat(variables('automationAccountName'), '/', parameters('configuration'), '.', variables('vmExtensionName'))]",
       "type": "Microsoft.Automation/automationAccounts/nodeConfigurations",
       "apiVersion": "2018-01-15",
-      "location": "parameters(location)",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Automation/automationAccounts/', variables('automationAccountName'), '/configurations/', parameters('configuration'))]"
       ],
@@ -341,7 +348,7 @@
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('virtualMachineName'), '/Microsoft.Powershell.DSC')]",
       "apiVersion": "2015-06-15",
-      "location": "parameters(location)",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
       ],
