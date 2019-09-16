@@ -70,20 +70,14 @@
         "description": "Medium for webserver. Large for Printserver"
       }
     },
-    "vNet": {
+    "ResourceGroupNameVnet": {
       "type": "string",
-      "defaultValue": "New",
-      "allowedValues": [
-        "New",
-        "Existing"
-      ],
       "metadata": {
         "description": "New or existing vNet for the VM"
       }
     },
     "virtualNetworkName": {
       "type": "string",
-      "defaultValue": "vNet-",
       "metadata": {
         "description": "Name of the existing VNET"
       }
@@ -95,7 +89,7 @@
         "description": "vNet Prefix"
       }
     },
-    "subnet1Name": {
+    "subnetName": {
       "type": "string",
       "defaultValue": "Subnet1",
       "metadata": {
@@ -170,7 +164,6 @@
     "imageOffer": "WindowsServer",
     "OSDiskName": "[concat(toLower(parameters('virtualMachineName')),'OSDisk')]",
     "publicIPAddressType": "Dynamic",
-    "subnet1Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnet1Name'))]",
     "networkInterfaceName": "[concat(toLower(parameters('virtualMachineName')),'-nic')]",
     "publicIpAddressName": "[concat(toLower(parameters('virtualMachineName')),'-ip')]",
     "configurationModeFrequencyMins": "240",
@@ -179,28 +172,33 @@
     "modulesUrl": "https://raw.githubusercontent.com/adv-dkluin/templateContainer/master/WebServerConfig.ps1",
     "configurationDescription": "Dit is een description",
     "automationAccountName": "AutomationAccount",
-    "networkSecurityGroupName":  "TestNSG"
+    "subscriptionId": "[subscription().subscriptionId]",
+    "virtualNetworkId": "[concat('/subscriptions/', variables('subscriptionId'),'/resourceGroups/', parameters('ResourceGroupNameVnet'),'/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+    "vnetId": "[variables('virtualNetworkId')]",
+    "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+
   },
   "resources": [
     {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Network/networkSecurityGroups",
-      "name": "[variables('networkSecurityGroupName')]",
+      "apiVersion": "2018-02-01",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('networkInterfaceName')]",
       "location": "parameters(location)",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIpAddressName'))]"
+      ],
       "properties": {
-        "securityRules": [
+        "ipConfigurations": [
           {
-            "name": "TestRule",
+            "name": "ipconfig1",
             "properties": {
-              "description": "This is the first rule",
-              "protocol": "Tcp",
-              "sourcePortRange": "*",
-              "destinationPortRange": "3389",
-              "sourceAddressPrefix": "*",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 300,
-              "direction": "Inbound"
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpAddressName'))]"
+              },
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              }
             }
           }
         ]
@@ -218,71 +216,6 @@
       "properties": {
         "publicIPAddressVersion": "IPv4",
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
-      }
-    },
-    {
-      "apiVersion": "2018-02-01",
-      "condition": "[equals(parameters('vNet'), 'New')]",
-      "location": "parameters(location)",
-      "name": "[parameters('virtualNetworkName')]",
-      "dependsOn": [
-        "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]"
-      ],
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[parameters('addressPrefix')]"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "[parameters('subnet1Name')]",
-            "properties": {
-              "addressPrefix": "[parameters('subnet1Prefix')]",
-              "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
-              }
-            }
-          }
-        ]
-      },
-      "type": "Microsoft.Network/virtualNetworks"
-    },
-    {
-      "apiVersion": "2018-04-01",
-      "condition": "[equals(parameters('vNet'), 'Existing')]",
-      "type": "Microsoft.Network/virtualNetworks/subnets",
-      "name": "[concat(parameters('virtualNetworkName'), '/', parameters('subnet1Name'))]",
-      "location": "parameters(location)",
-      "properties": {
-        "addressPrefix": "[parameters('subnet1Prefix')]"
-      }
-    },
-
-    {
-      "apiVersion": "2018-02-01",
-      "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('networkInterfaceName')]",
-      "location": "parameters(location)",
-      "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIpAddressName'))]",
-        "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
-      ],
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIpAddressName'))]"
-              },
-              "subnet": {
-                "id": "[variables('subnet1Ref')]"
-              }
-            }
-          }
-        ]
       }
     },
     {
