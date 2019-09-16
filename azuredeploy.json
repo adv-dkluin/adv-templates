@@ -10,10 +10,10 @@
     },
     "location": {
       "type": "string",
-      "defaultValue": "West Europe",
+      "defaultValue": "WestEurope",
       "allowedValues": [
-        "West Europe",
-        "North Europe"
+        "WestEurope",
+        "NorthEurope"
       ]
     },
     "configuration": {
