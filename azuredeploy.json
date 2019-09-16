@@ -82,13 +82,6 @@
         "description": "Name of the existing VNET"
       }
     },
-    "addressPrefix": {
-      "type": "string",
-      "defaultValue": "192.168.0.0/21",
-      "metadata": {
-        "description": "vNet Prefix"
-      }
-    },
     "subnetName": {
       "type": "string",
       "defaultValue": "Subnet1",
@@ -96,16 +89,17 @@
         "description": "Subnet 1 Name"
       }
     },
-    "subnet1Prefix": {
-      "type": "string",
-      "defaultValue": "192.168.0.0/24",
-      "metadata": {
-        "description": "Subnet 1 Prefix"
-      }
-    },
     "DataDisks": {
       "type": "int",
-      "defaultValue": "1",
+      "defaultValue": "0",
+      "allowedValues": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
       "metadata": {
         "description": "Amount of Datadisks"
       }
