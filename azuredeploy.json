@@ -258,7 +258,7 @@
             "sku": "[parameters('windowsOSVersion')]",
             "version": "latest"
           },
-          "copy": [
+          "dataDisks": [
             {
               "name": "dataDisks",
               "count": "[parameters('DataDisks')]",
@@ -426,5 +426,11 @@
         }
       }
     }
-  ]
+  ],
+  "outputs": {
+    "resourceGroupOutput": {
+      "value": "[resourceGroup()]",
+      "type": "object"
+    }
+  }
 }
