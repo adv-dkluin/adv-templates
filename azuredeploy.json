@@ -40,7 +40,6 @@
     },
     "adminUsername": {
       "type": "string",
-      "defaultValue": "advisor",
       "metadata": {
         "description": "The admin user name of the VM"
       }
