@@ -261,11 +261,9 @@
           },
           "copy": [
             {
-              "condition": "[equals(parameters('CreateDataDisk'), 'Yes')]",
               "name": "dataDisks",
               "count": "[parameters('DataDisks')]",
               "input": {
-                "condition": "[equals(parameters('CreateDataDisk'), 'Yes')]",
                 "name": "[concat(parameters('virtualMachineName'),'DataDisk',copyIndex('dataDisks'))]",
                 "diskSizeGB": "[parameters('dataDiskSize')]",
                 "lun": "[copyIndex('dataDisks')]",
