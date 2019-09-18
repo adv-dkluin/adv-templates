@@ -88,44 +88,6 @@
       "metadata": {
         "description": "Subnet 1 Name"
       }
-    },
-    "CreateDataDisk": {
-      "type": "string",
-      "defaultValue": "No",
-      "allowedValues": [
-        "Yes",
-        "No"
-      ],
-      "metadata": {
-        "description": "Amount of Datadisks"
-      }
-    },
-    "DataDisks": {
-      "type": "int",
-      "defaultValue": "0",
-      "allowedValues": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "metadata": {
-        "description": "Amount of Datadisks"
-      }
-    },
-    "dataDiskSize": {
-      "type": "int",
-      "defaultValue": 0,
-      "allowedValues": [
-        0,
-        128,
-        256
-      ],
-      "metadata": {
-        "description": "Amount of Datadisks"
-      }
     }
   },
   "variables": {
@@ -257,22 +219,7 @@
             "offer": "[variables('imageOffer')]",
             "sku": "[parameters('windowsOSVersion')]",
             "version": "latest"
-          },
-          "dataDisks": [
-            {
-              "name": "dataDisks",
-              "count": "[parameters('DataDisks')]",
-              "input": {
-                "name": "[concat(parameters('virtualMachineName'),'DataDisk',copyIndex('dataDisks'))]",
-                "diskSizeGB": "[parameters('dataDiskSize')]",
-                "lun": "[copyIndex('dataDisks')]",
-                "createOption": "Empty",
-                "managedDisk": {
-                  "storageAccountType": "[variables('diskType')]"
-                }
-              }
-            }
-          ]
+          }
         },
         "networkProfile": {
           "networkInterfaces": [
